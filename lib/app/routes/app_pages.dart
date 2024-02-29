@@ -4,6 +4,8 @@ import '../modules/allTopAnime/bindings/all_top_anime_binding.dart';
 import '../modules/allTopAnime/views/all_top_anime_view.dart';
 import '../modules/bottomBar/bindings/bottom_bar_binding.dart';
 import '../modules/bottomBar/views/bottom_bar_view.dart';
+import '../modules/detail/bindings/detail_binding.dart';
+import '../modules/detail/views/detail_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
@@ -38,6 +40,11 @@ class AppPages {
       name: _Paths.ALL_TOP_ANIME,
       page: () => const AllTopAnimeView(),
       binding: AllTopAnimeBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL,
+      page: () => const DetailView(),
+      binding: DetailBinding(),
     ),
   ];
 }

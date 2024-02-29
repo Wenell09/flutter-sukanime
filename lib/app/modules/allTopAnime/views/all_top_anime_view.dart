@@ -35,28 +35,27 @@ class AllTopAnimeView extends GetView<AllTopAnimeController> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            InkWell(
-                              highlightColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              onTap: () async {
-                                // Panggil fungsi fetchPreviousPage() ketika tombol kembali ditekan
-                                await controller.fetchPreviousPage();
-                              },
-                              child: Container(
-                                width: 35,
-                                height: 35,
-                                decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: const Icon(
-                                  Icons.arrow_back_ios_new,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
+                            (controller.isFirstPage.value)
+                                ? const Text("")
+                                : InkWell(
+                                    highlightColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    splashColor: Colors.transparent,
+                                    onTap: () => controller.fetchPreviousPage(),
+                                    child: Container(
+                                      width: 35,
+                                      height: 35,
+                                      decoration: BoxDecoration(
+                                        color: Colors.black,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: const Icon(
+                                        Icons.arrow_back_ios_new,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
                             const SizedBox(
                               width: 10,
                             ),
@@ -87,10 +86,7 @@ class AllTopAnimeView extends GetView<AllTopAnimeController> {
                               hoverColor: Colors.transparent,
                               focusColor: Colors.transparent,
                               splashColor: Colors.transparent,
-                              onTap: () async {
-                                // Panggil fungsi fetchPreviousPage() ketika tombol kembali ditekan
-                                await controller.fetchNextPage();
-                              },
+                              onTap: () => controller.fetchNextPage(),
                               child: Container(
                                 width: 35,
                                 height: 35,

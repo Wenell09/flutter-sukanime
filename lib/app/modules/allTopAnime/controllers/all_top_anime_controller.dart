@@ -9,13 +9,20 @@ class AllTopAnimeController extends GetxController {
   var isLoading = true.obs;
   var allTopAnime = <AnimeTop>[].obs;
   var currentPage = 1.obs;
+  var isFirstPage = true.obs;
 
   Future<void> fetchAllTopAnime(int page) async {
     try {
       var response = await http.get(Uri.parse("$baseUrl/top/anime?page=$page"));
       if (response.statusCode == 200) {
         final List result = jsonDecode(response.body)["data"];
-        allTopAnime.value = result.map((e) => AnimeTop.fromJson(e)).toList();
+        if (page == 1) {
+          allTopAnime.value = result.map((e) => AnimeTop.fromJson(e)).toList();
+          isFirstPage.value = true;
+        } else {
+          allTopAnime.value = result.map((e) => AnimeTop.fromJson(e)).toList();
+          isFirstPage.value = false;
+        }
         isLoading.value = false;
         currentPage.value = page;
       }
