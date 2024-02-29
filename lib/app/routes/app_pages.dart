@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/allTopAnime/bindings/all_top_anime_binding.dart';
+import '../modules/allTopAnime/views/all_top_anime_view.dart';
 import '../modules/bottomBar/bindings/bottom_bar_binding.dart';
 import '../modules/bottomBar/views/bottom_bar_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -31,6 +33,11 @@ class AppPages {
       name: _Paths.BOTTOM_BAR,
       page: () => const BottomBarView(),
       binding: BottomBarBinding(),
+    ),
+    GetPage(
+      name: _Paths.ALL_TOP_ANIME,
+      page: () => const AllTopAnimeView(),
+      binding: AllTopAnimeBinding(),
     ),
   ];
 }
