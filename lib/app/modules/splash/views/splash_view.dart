@@ -37,7 +37,7 @@ class SplashView extends GetView<SplashController> {
               height: 20,
             ),
             const Text(
-              "MY ANIME LIST",
+              "MYNIMELIST",
               style: TextStyle(fontSize: 32, color: Colors.white),
             ),
           ],

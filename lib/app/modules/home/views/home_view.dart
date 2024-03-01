@@ -11,7 +11,7 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'MY ANIME LIST',
+          'MYNIMELIST',
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -75,58 +75,70 @@ class HomeView extends GetView<HomeController> {
                           padding: const EdgeInsets.all(8.0),
                           itemBuilder: (context, index) {
                             var animeTopCard = controller.animeTopCard[index];
-                            return Card(
-                              elevation: 5,
-                              shadowColor: Colors.black,
-                              child: Column(
-                                children: [
-                                  Expanded(
-                                    flex: 3,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: Image.network(
-                                        animeTopCard.imageUrl,
-                                        fit: BoxFit.cover,
-                                        height:
-                                            MediaQuery.of(context).size.height,
-                                        width:
-                                            MediaQuery.of(context).size.width,
+                            return InkWell(
+                              highlightColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              onTap: () => Navigator.pushNamed(
+                                context,
+                                Routes.DETAIL,
+                                arguments: animeTopCard.malId,
+                              ),
+                              child: Card(
+                                elevation: 5,
+                                shadowColor: Colors.black,
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      flex: 3,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.network(
+                                          animeTopCard.imageUrl,
+                                          fit: BoxFit.cover,
+                                          height: MediaQuery.of(context)
+                                              .size
+                                              .height,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Flexible(
-                                            flex: 1,
-                                            child: Text(
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              animeTopCard.title,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
+                                    Expanded(
+                                      flex: 1,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Flexible(
+                                              flex: 1,
+                                              child: Text(
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                animeTopCard.title,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          const Flexible(
-                                            flex: 1,
-                                            child: Icon(
-                                              Icons.bookmark_border_outlined,
-                                              color: Colors.blue,
-                                              size: 30,
+                                            const Flexible(
+                                              flex: 1,
+                                              child: Icon(
+                                                Icons.bookmark_border_outlined,
+                                                color: Colors.blue,
+                                                size: 30,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               ),
                             );
                           },
@@ -164,58 +176,70 @@ class HomeView extends GetView<HomeController> {
                           itemBuilder: (context, index) {
                             var animeRecomCard =
                                 controller.animeRecomendCard[index];
-                            return Card(
-                              elevation: 5,
-                              shadowColor: Colors.black,
-                              child: Column(
-                                children: [
-                                  Expanded(
-                                    flex: 3,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: Image.network(
-                                        animeRecomCard.imageUrl,
-                                        fit: BoxFit.cover,
-                                        height:
-                                            MediaQuery.of(context).size.height,
-                                        width:
-                                            MediaQuery.of(context).size.width,
+                            return InkWell(
+                              highlightColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              onTap: () => Navigator.pushNamed(
+                                context,
+                                Routes.DETAIL,
+                                arguments: animeRecomCard.malId,
+                              ),
+                              child: Card(
+                                elevation: 5,
+                                shadowColor: Colors.black,
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      flex: 3,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.network(
+                                          animeRecomCard.imageUrl,
+                                          fit: BoxFit.cover,
+                                          height: MediaQuery.of(context)
+                                              .size
+                                              .height,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Flexible(
-                                            flex: 1,
-                                            child: Text(
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              animeRecomCard.title,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
+                                    Expanded(
+                                      flex: 1,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Flexible(
+                                              flex: 1,
+                                              child: Text(
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                animeRecomCard.title,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          const Flexible(
-                                            flex: 1,
-                                            child: Icon(
-                                              Icons.bookmark_border_outlined,
-                                              color: Colors.blue,
-                                              size: 30,
+                                            const Flexible(
+                                              flex: 1,
+                                              child: Icon(
+                                                Icons.bookmark_border_outlined,
+                                                color: Colors.blue,
+                                                size: 30,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               ),
                             );
                           },
