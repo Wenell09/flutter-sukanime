@@ -77,7 +77,7 @@ class AllTopAnimeView extends GetView<AllTopAnimeController> {
                                 width: 5,
                               ),
                               const Text(
-                                "1057",
+                                "1070",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(
