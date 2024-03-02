@@ -83,7 +83,16 @@ class HomeView extends GetView<HomeController> {
                               onTap: () => Navigator.pushNamed(
                                 context,
                                 Routes.DETAIL,
-                                arguments: animeTopCard.malId,
+                                arguments: {
+                                  "id": animeTopCard.malId,
+                                  "image": animeTopCard.imageUrl,
+                                  "title": animeTopCard.title,
+                                  "aired": animeTopCard.airedFrom,
+                                  "type": animeTopCard.type,
+                                  "rating": animeTopCard.rating,
+                                  "score": animeTopCard.score,
+                                  "member": animeTopCard.members,
+                                },
                               ),
                               child: Card(
                                 elevation: 5,
@@ -184,7 +193,16 @@ class HomeView extends GetView<HomeController> {
                               onTap: () => Navigator.pushNamed(
                                 context,
                                 Routes.DETAIL,
-                                arguments: animeRecomCard.malId,
+                                arguments: {
+                                  "id": animeRecomCard.malId,
+                                  "image": animeRecomCard.imageUrl,
+                                  "title": animeRecomCard.title,
+                                  "aired": animeRecomCard.airedFrom,
+                                  "type": animeRecomCard.type,
+                                  "rating": animeRecomCard.rating,
+                                  "score": animeRecomCard.score,
+                                  "member": animeRecomCard.members,
+                                },
                               ),
                               child: Card(
                                 elevation: 5,

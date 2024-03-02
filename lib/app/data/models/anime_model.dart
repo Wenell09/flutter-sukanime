@@ -1,4 +1,4 @@
-class AnimeDetail {
+class AnimeModel {
   late int malId;
   late String url;
   late String imageUrl;
@@ -29,7 +29,7 @@ class AnimeDetail {
   late List<Map<String, dynamic>> genres;
   late List<Map<String, dynamic>> demographics;
 
-  AnimeDetail({
+  AnimeModel({
     required this.malId,
     required this.url,
     required this.imageUrl,
@@ -60,8 +60,8 @@ class AnimeDetail {
     required this.demographics,
   });
 
-  factory AnimeDetail.fromJson(Map<String, dynamic> json) {
-    return AnimeDetail(
+  factory AnimeModel.fromJson(Map<String, dynamic> json) {
+    return AnimeModel(
       malId: json["mal_id"] ?? 0,
       url: json["url"] ?? "",
       imageUrl: json["images"]["jpg"]["image_url"] ?? "",

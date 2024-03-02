@@ -1,21 +1,21 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_list_anime/app/data/base/base_url.dart';
-import 'package:flutter_list_anime/app/data/models/anime_top.dart';
+import 'package:flutter_list_anime/app/data/models/anime_model.dart';
 import 'package:get/get.dart';
 import "package:http/http.dart" as http;
 
 class HomeController extends GetxController {
   var isLoading = true.obs;
-  var animeTopCard = <AnimeTop>[].obs;
-  var animeRecomendCard = <AnimeTop>[].obs;
+  var animeTopCard = <AnimeModel>[].obs;
+  var animeRecomendCard = <AnimeModel>[].obs;
 
   Future<void> fetchTopAnime() async {
     try {
       var response = await http.get(Uri.parse("$baseUrl/top/anime?limit=6"));
       if (response.statusCode == 200) {
         final List result = jsonDecode(response.body)["data"];
-        animeTopCard.value = result.map((e) => AnimeTop.fromJson(e)).toList();
+        animeTopCard.value = result.map((e) => AnimeModel.fromJson(e)).toList();
         isLoading.value = !isLoading.value;
       }
     } catch (e) {
@@ -30,7 +30,7 @@ class HomeController extends GetxController {
       if (response.statusCode == 200) {
         final List result = jsonDecode(response.body)["data"];
         animeRecomendCard.value =
-            result.map((e) => AnimeTop.fromJson(e)).toList();
+            result.map((e) => AnimeModel.fromJson(e)).toList();
       }
     } catch (e) {
       debugPrint("Gagal fetch $e");

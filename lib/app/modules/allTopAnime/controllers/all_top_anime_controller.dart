@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_list_anime/app/data/base/base_url.dart';
-import 'package:flutter_list_anime/app/data/models/anime_top.dart';
+import 'package:flutter_list_anime/app/data/models/anime_model.dart';
 import 'package:get/get.dart';
 import "package:http/http.dart" as http;
 
 class AllTopAnimeController extends GetxController {
   var isLoading = true.obs;
-  var allTopAnime = <AnimeTop>[].obs;
+  var allTopAnime = <AnimeModel>[].obs;
   var currentPage = 1.obs;
   var isFirstPage = true.obs;
 
@@ -17,10 +17,12 @@ class AllTopAnimeController extends GetxController {
       if (response.statusCode == 200) {
         final List result = jsonDecode(response.body)["data"];
         if (page == 1) {
-          allTopAnime.value = result.map((e) => AnimeTop.fromJson(e)).toList();
+          allTopAnime.value =
+              result.map((e) => AnimeModel.fromJson(e)).toList();
           isFirstPage.value = true;
         } else {
-          allTopAnime.value = result.map((e) => AnimeTop.fromJson(e)).toList();
+          allTopAnime.value =
+              result.map((e) => AnimeModel.fromJson(e)).toList();
           isFirstPage.value = false;
         }
         isLoading.value = false;

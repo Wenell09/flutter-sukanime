@@ -72,7 +72,7 @@ class DetailView extends GetView<DetailController> {
                                             height: 10,
                                           ),
                                           Text(
-                                            detailAnime.titleEnglish,
+                                            detailAnime.title,
                                             maxLines: 2,
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
@@ -275,16 +275,18 @@ class DetailView extends GetView<DetailController> {
                                     Row(
                                       children: [
                                         const Text(
-                                          "Title • ",
+                                          "Title English • ",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,
                                           ),
                                         ),
-                                        Text(
-                                          detailAnime.title,
-                                          style: const TextStyle(
-                                            fontSize: 15,
+                                        Flexible(
+                                          child: Text(
+                                            detailAnime.titleEnglish,
+                                            style: const TextStyle(
+                                              fontSize: 15,
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -298,10 +300,14 @@ class DetailView extends GetView<DetailController> {
                                             fontSize: 15,
                                           ),
                                         ),
-                                        Text(
-                                          detailAnime.titleJapanese,
-                                          style: const TextStyle(
-                                            fontSize: 15,
+                                        Flexible(
+                                          child: Text(
+                                            detailAnime.titleJapanese,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontSize: 15,
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -426,24 +432,26 @@ class DetailView extends GetView<DetailController> {
                                         ),
                                       ],
                                     ),
-                                    Row(
-                                      children: [
-                                        const Text(
-                                          "Date(s) Completed • ",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15,
+                                    (detailAnime.airedTo.isEmpty)
+                                        ? Container()
+                                        : Row(
+                                            children: [
+                                              const Text(
+                                                "Date(s) Completed • ",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                              Text(
+                                                controller.formatDate(
+                                                    detailAnime.airedTo),
+                                                style: const TextStyle(
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                        Text(
-                                          controller
-                                              .formatDate(detailAnime.airedTo),
-                                          style: const TextStyle(
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
                                     Row(
                                       children: [
                                         const Text(
@@ -461,23 +469,41 @@ class DetailView extends GetView<DetailController> {
                                         ),
                                       ],
                                     ),
-                                    Row(
-                                      children: [
-                                        const Text(
-                                          "Genre • ",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15,
+                                    (detailAnime.demographics.isEmpty)
+                                        ? Row(
+                                            children: [
+                                              const Text(
+                                                "Genre • ",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                              Text(
+                                                genreNames.join(", "),
+                                                style: const TextStyle(
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        : Row(
+                                            children: [
+                                              const Text(
+                                                "Genre • ",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                              Text(
+                                                "${detailAnime.demographics[0]["name"]}, ${genreNames.join(", ")}",
+                                                style: const TextStyle(
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                        Text(
-                                          genreNames.join(", "),
-                                          style: const TextStyle(
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
                                     Row(
                                       children: [
                                         const Text(

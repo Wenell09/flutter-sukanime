@@ -126,7 +126,16 @@ class AllTopAnimeView extends GetView<AllTopAnimeController> {
                               onTap: () => Navigator.pushNamed(
                                 context,
                                 Routes.DETAIL,
-                                arguments: animeTopCard.malId,
+                                arguments: {
+                                  "id": animeTopCard.malId,
+                                  "image": animeTopCard.imageUrl,
+                                  "title": animeTopCard.title,
+                                  "aired": animeTopCard.airedFrom,
+                                  "type": animeTopCard.type,
+                                  "rating": animeTopCard.rating,
+                                  "score": animeTopCard.score,
+                                  "member": animeTopCard.members,
+                                },
                               ),
                               child: Card(
                                 elevation: 5,
