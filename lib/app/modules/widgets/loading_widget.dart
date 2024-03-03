@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 class LoadingWidget extends StatelessWidget {
+  final String text;
+  final double mediaQuery;
   const LoadingWidget({
     super.key,
+    required this.text,
+    required this.mediaQuery,
   });
 
   @override
@@ -10,23 +14,23 @@ class LoadingWidget extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.9,
-      child: const Column(
+      height: mediaQuery,
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircularProgressIndicator(
+          const CircularProgressIndicator(
             backgroundColor: Colors.blue,
             color: Colors.black,
             strokeWidth: 10,
             strokeAlign: 3,
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Text(
-            "Memuat list Anime....",
-            style: TextStyle(
+            text,
+            style: const TextStyle(
               // fontFamily: "Poppins",
               fontWeight: FontWeight.w500,
               fontSize: 20,

@@ -15,9 +15,13 @@ class DetailController extends GetxController {
     try {
       var response = await http.get(Uri.parse("$baseUrl/anime/$id"));
       if (response.statusCode == 200) {
-        final Map<String, dynamic> result = jsonDecode(response.body)["data"];
-        detailAnime.value = [AnimeModel.fromJson(result)];
-        isLoading.value = !isLoading.value;
+        if (Get.arguments["id"] != id) {
+          isLoading.value = true;
+        } else {
+          final Map<String, dynamic> result = jsonDecode(response.body)["data"];
+          detailAnime.value = [AnimeModel.fromJson(result)];
+          isLoading.value = !isLoading.value;
+        }
       }
     } catch (e) {
       debugPrint("Gagal fetch : $e");

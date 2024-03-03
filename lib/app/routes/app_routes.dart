@@ -10,6 +10,7 @@ abstract class Routes {
   static const BOTTOM_BAR = _Paths.BOTTOM_BAR;
   static const ALL_TOP_ANIME = _Paths.ALL_TOP_ANIME;
   static const DETAIL = _Paths.DETAIL;
+  static const TAB_BAR = _Paths.TAB_BAR;
 }
 
 abstract class _Paths {
@@ -19,4 +20,5 @@ abstract class _Paths {
   static const BOTTOM_BAR = '/bottom-bar';
   static const ALL_TOP_ANIME = '/all-top-anime';
   static const DETAIL = '/detail';
+  static const TAB_BAR = '/tab-bar';
 }

@@ -27,7 +27,10 @@ class AllTopAnimeView extends GetView<AllTopAnimeController> {
             physics: const ScrollPhysics(),
             child: Obx(
               () => (controller.isLoading.value)
-                  ? const LoadingWidget()
+                  ? LoadingWidget(
+                      text: "Memuat list Anime....",
+                      mediaQuery: MediaQuery.of(context).size.height * 0.9,
+                    )
                   : Column(
                       children: [
                         Padding(
