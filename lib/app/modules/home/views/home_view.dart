@@ -22,7 +22,7 @@ class HomeView extends GetView<HomeController> {
       body: ListView(
         children: [
           SingleChildScrollView(
-            physics: const ScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Obx(
               () => (controller.isLoading.value)
                   ? LoadingWidget(
@@ -95,6 +95,7 @@ class HomeView extends GetView<HomeController> {
                                   "rating": animeTopCard.rating,
                                   "score": animeTopCard.score,
                                   "member": animeTopCard.members,
+                                  "youtube": animeTopCard.youtubeUrl,
                                 },
                               ),
                               child: Card(
@@ -205,6 +206,7 @@ class HomeView extends GetView<HomeController> {
                                   "rating": animeRecomCard.rating,
                                   "score": animeRecomCard.score,
                                   "member": animeRecomCard.members,
+                                  "youtube": animeRecomCard.youtubeUrl,
                                 },
                               ),
                               child: Card(

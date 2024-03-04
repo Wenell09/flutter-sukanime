@@ -138,6 +138,7 @@ class AllTopAnimeView extends GetView<AllTopAnimeController> {
                                   "rating": animeTopCard.rating,
                                   "score": animeTopCard.score,
                                   "member": animeTopCard.members,
+                                  "youtube": animeTopCard.youtubeUrl,
                                 },
                               ),
                               child: Card(

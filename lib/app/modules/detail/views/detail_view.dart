@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_list_anime/app/modules/detail/controllers/detail_controller.dart';
 import 'package:flutter_list_anime/app/modules/detail/widgets/card_detail.dart';
 import 'package:flutter_list_anime/app/modules/detail/widgets/isi_detail.dart';
 import 'package:flutter_list_anime/app/modules/widgets/loading_widget.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../controllers/detail_controller.dart';
+import 'package:readmore/readmore.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class DetailView extends GetView<DetailController> {
+class DetailView extends StatelessWidget {
   const DetailView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(DetailController());
     final argument = Get.arguments;
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(310),
@@ -116,7 +120,10 @@ class DetailView extends GetView<DetailController> {
               overlayColor: MaterialStatePropertyAll(Colors.transparent),
               tabs: [
                 Tab(
-                  text: "Detail",
+                  text: "Details",
+                ),
+                Tab(
+                  text: "Trailers",
                 ),
                 Tab(
                   text: "Reviews",
@@ -126,6 +133,7 @@ class DetailView extends GetView<DetailController> {
           ),
         ),
         body: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
           children: [
             ListView(
               children: [
@@ -219,9 +227,6 @@ class DetailView extends GetView<DetailController> {
                                               fontSize: 18,
                                             ),
                                           ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
                                           Container(
                                             padding: const EdgeInsets.all(10),
                                             width: MediaQuery.of(context)
@@ -236,9 +241,6 @@ class DetailView extends GetView<DetailController> {
                                             ),
                                             child: Column(
                                               children: [
-                                                const SizedBox(
-                                                  height: 2,
-                                                ),
                                                 IsiDetail(
                                                   title: "Title English • ",
                                                   isi: detailAnime.titleEnglish,
@@ -316,6 +318,30 @@ class DetailView extends GetView<DetailController> {
                                                   isi:
                                                       "${detailAnime.favorites.toString()} Person",
                                                 ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                ReadMoreText(
+                                                  detailAnime.synopsis,
+                                                  trimLines: 5,
+                                                  trimMode: TrimMode.Line,
+                                                  trimCollapsedText: "More",
+                                                  trimExpandedText: "Hide",
+                                                  lessStyle: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.blue,
+                                                    fontSize: 15,
+                                                  ),
+                                                  moreStyle: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.blue,
+                                                    fontSize: 15,
+                                                  ),
+                                                  textAlign: TextAlign.justify,
+                                                  style: const TextStyle(
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
                                               ],
                                             ),
                                           ),
@@ -325,6 +351,29 @@ class DetailView extends GetView<DetailController> {
                             },
                             itemCount: controller.detailAnime.length,
                           ),
+                  ),
+                ),
+              ],
+            ),
+            ListView(
+              shrinkWrap: true,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: YoutubePlayer(
+                    controller: controller.youtubeController,
+                    showVideoProgressIndicator: true,
+                    bottomActions: [
+                      CurrentPosition(),
+                      ProgressBar(
+                        isExpanded: true,
+                        colors: const ProgressBarColors(
+                          playedColor: Colors.blue,
+                          handleColor: Colors.blue,
+                        ),
+                      ),
+                      const PlaybackSpeedButton(),
+                    ],
                   ),
                 ),
               ],

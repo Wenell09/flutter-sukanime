@@ -6,10 +6,12 @@ import 'package:flutter_list_anime/app/data/models/anime_model.dart';
 import 'package:get/get.dart';
 import "package:http/http.dart" as http;
 import 'package:intl/intl.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class DetailController extends GetxController {
   var isLoading = true.obs;
   var detailAnime = <AnimeModel>[].obs;
+  late YoutubePlayerController youtubeController;
 
   Future<void> fetchDetailAnime(int id) async {
     try {
@@ -58,6 +60,19 @@ class DetailController extends GetxController {
   @override
   void onInit() {
     fetchDetailAnime(Get.arguments["id"]);
+    final videoId = YoutubePlayer.convertUrlToId(Get.arguments["youtube"]);
+    youtubeController = YoutubePlayerController(
+      initialVideoId: videoId.toString(),
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+      ),
+    );
     super.onInit();
+  }
+
+  @override
+  void dispose() {
+    youtubeController.dispose();
+    super.dispose();
   }
 }
