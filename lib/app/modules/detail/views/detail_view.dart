@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_list_anime/app/modules/detail/controllers/detail_controller.dart';
 import 'package:flutter_list_anime/app/modules/detail/widgets/card_detail.dart';
 import 'package:flutter_list_anime/app/modules/detail/widgets/isi_detail.dart';

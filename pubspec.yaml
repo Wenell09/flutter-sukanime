@@ -17,6 +17,7 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   readmore: ^2.2.0
   youtube_player_flutter: ^9.0.0
+  flutter_inappwebview: ^6.0.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0
