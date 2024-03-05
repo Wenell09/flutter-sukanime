@@ -10,7 +10,7 @@ class SplashView extends GetView<SplashController> {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacementNamed(Routes.HOME);
+      Navigator.of(context).pushReplacementNamed(Routes.BOTTOM_BAR);
     });
     return Scaffold(
       body: Container(

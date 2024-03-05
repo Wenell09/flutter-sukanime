@@ -13,7 +13,8 @@ class AllTopAnimeController extends GetxController {
 
   Future<void> fetchAllTopAnime(int page) async {
     try {
-      var response = await http.get(Uri.parse("$baseUrl/top/anime?page=$page"));
+      var response =
+          await http.get(Uri.parse("$baseUrl/top/anime?page=$page&sfw=true"));
       if (response.statusCode == 200) {
         final List result = jsonDecode(response.body)["data"];
         if (page == 1) {

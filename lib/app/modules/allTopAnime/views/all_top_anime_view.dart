@@ -13,7 +13,7 @@ class AllTopAnimeView extends GetView<AllTopAnimeController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'TOP ANIME',
+          'Top Anime',
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -80,7 +80,7 @@ class AllTopAnimeView extends GetView<AllTopAnimeController> {
                                 width: 5,
                               ),
                               const Text(
-                                "1070",
+                                "1007",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(

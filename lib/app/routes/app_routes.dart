@@ -11,6 +11,9 @@ abstract class Routes {
   static const ALL_TOP_ANIME = _Paths.ALL_TOP_ANIME;
   static const DETAIL = _Paths.DETAIL;
   static const TAB_BAR = _Paths.TAB_BAR;
+  static const SEARCH = _Paths.SEARCH;
+  static const SEARCH_ANIME = _Paths.SEARCH_ANIME;
+  static const PROFILE = _Paths.PROFILE;
 }
 
 abstract class _Paths {
@@ -21,4 +24,7 @@ abstract class _Paths {
   static const ALL_TOP_ANIME = '/all-top-anime';
   static const DETAIL = '/detail';
   static const TAB_BAR = '/tab-bar';
+  static const SEARCH = '/search';
+  static const SEARCH_ANIME = '/search-anime';
+  static const PROFILE = '/profile';
 }

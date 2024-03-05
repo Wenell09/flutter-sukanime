@@ -15,7 +15,6 @@ class AnimeModel {
   late String duration;
   late String rating;
   late double score;
-  late int scoredBy;
   late int rank;
   late int popularity;
   late int members;
@@ -46,7 +45,6 @@ class AnimeModel {
     required this.duration,
     required this.rating,
     required this.score,
-    required this.scoredBy,
     required this.rank,
     required this.popularity,
     required this.members,
@@ -77,8 +75,7 @@ class AnimeModel {
       airedTo: json["aired"]["to"] ?? "",
       duration: json["duration"] ?? "",
       rating: json["rating"] ?? "",
-      score: json["score"] ?? 0.0,
-      scoredBy: json["scored_by"] ?? 0,
+      score: (json["score"] ?? 0).toDouble(),
       rank: json["rank"] ?? 0,
       popularity: json["popularity"] ?? 0,
       members: json["members"] ?? 0,
@@ -86,10 +83,10 @@ class AnimeModel {
       synopsis: json["synopsis"] ?? "",
       season: json["season"] ?? "",
       year: json["year"] ?? 0,
-      producers: List<Map<String, dynamic>>.from(json["producers"] ?? ""),
-      studios: List<Map<String, dynamic>>.from(json["studios"] ?? ""),
-      genres: List<Map<String, dynamic>>.from(json["genres"] ?? ""),
-      demographics: List<Map<String, dynamic>>.from(json["demographics"] ?? ""),
+      producers: List<Map<String, dynamic>>.from(json["producers"] ?? []),
+      studios: List<Map<String, dynamic>>.from(json["studios"] ?? []),
+      genres: List<Map<String, dynamic>>.from(json["genres"] ?? []),
+      demographics: List<Map<String, dynamic>>.from(json["demographics"] ?? []),
     );
   }
 }

@@ -7,6 +7,10 @@ import '../modules/bottomBar/views/bottom_bar_view.dart';
 import '../modules/detail/views/detail_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
+import '../modules/searchAnime/bindings/search_anime_binding.dart';
+import '../modules/searchAnime/views/search_anime_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 
@@ -43,6 +47,16 @@ class AppPages {
     GetPage(
       name: _Paths.DETAIL,
       page: () => const DetailView(),
+    ),
+    GetPage(
+      name: _Paths.SEARCH_ANIME,
+      page: () => const SearchAnimeView(),
+      binding: SearchAnimeBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
     ),
   ];
 }

@@ -155,24 +155,27 @@ class DetailView extends StatelessWidget {
                                 genreNames.add(genre['name']);
                               }
                               return (argument["id"] != detailAnime.malId)
-                                  ? const Center(
+                                  ? Center(
                                       child: Column(
                                         children: [
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           Icon(
-                                            Icons.dangerous_outlined,
-                                            color: Colors.blue,
-                                            size: 130,
+                                            FontAwesomeIcons.circleXmark,
+                                            color: Colors.grey[800],
+                                            size: 100,
                                           ),
-                                          Text(
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          const Text(
                                             "Data tidak ditemukan !",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 15),
                                           ),
-                                          Text(
+                                          const Text(
                                             "User menekan dengan cepat, ulangi kembali!",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
