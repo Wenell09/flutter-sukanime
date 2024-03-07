@@ -109,13 +109,6 @@ class SearchAnimeView extends GetView<SearchAnimeController> {
                               height: 10,
                             ),
                             const Text(
-                              "Halaman pencarian anime.",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                              ),
-                            ),
-                            const Text(
                               "Cari anime kesukaanmu disini!",
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
