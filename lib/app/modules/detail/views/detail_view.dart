@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_list_anime/app/modules/detail/controllers/detail_controller.dart';
 import 'package:flutter_list_anime/app/modules/detail/widgets/card_detail.dart';
 import 'package:flutter_list_anime/app/modules/detail/widgets/isi_detail.dart';
+import 'package:flutter_list_anime/app/modules/profile/controllers/profile_controller.dart';
 import 'package:flutter_list_anime/app/modules/widgets/loading_widget.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -13,6 +14,7 @@ class DetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(DetailController());
+    final darkMode = Get.put(ProfileController());
     final argument = Get.arguments;
     return DefaultTabController(
       length: 3,
@@ -104,20 +106,20 @@ class DetailView extends StatelessWidget {
                 ),
               ),
             ),
-            bottom: const TabBar(
+            bottom: TabBar(
               labelStyle: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: (darkMode.isDark.value) ? Colors.white : Colors.black,
               ),
-              unselectedLabelStyle: TextStyle(
+              unselectedLabelStyle: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.grey,
               ),
               indicatorColor: Colors.blue,
-              overlayColor: MaterialStatePropertyAll(Colors.transparent),
-              tabs: [
+              overlayColor: const MaterialStatePropertyAll(Colors.transparent),
+              tabs: const [
                 Tab(
                   text: "Details",
                 ),
@@ -141,6 +143,9 @@ class DetailView extends StatelessWidget {
                   child: Obx(
                     () => (controller.isLoading.value)
                         ? LoadingWidget(
+                            color: (darkMode.isDark.value)
+                                ? Colors.white
+                                : Colors.black,
                             text: "loading data....",
                             mediaQuery:
                                 MediaQuery.of(context).size.height * 0.5,
@@ -205,7 +210,9 @@ class DetailView extends StatelessWidget {
                                               ),
                                               CardDetail(
                                                 iconData: FontAwesomeIcons.pen,
-                                                color: Colors.grey,
+                                                color: (darkMode.isDark.value)
+                                                    ? Colors.grey[700]!
+                                                    : Colors.grey,
                                                 title: "Score",
                                                 isi: detailAnime.score
                                                     .toString(),
@@ -236,7 +243,9 @@ class DetailView extends StatelessWidget {
                                                     .width *
                                                 0.95,
                                             decoration: BoxDecoration(
-                                              color: Colors.grey[50],
+                                              color: (darkMode.isDark.value)
+                                                  ? Colors.grey[850]
+                                                  : Colors.grey[50],
                                               borderRadius:
                                                   BorderRadiusDirectional
                                                       .circular(5),

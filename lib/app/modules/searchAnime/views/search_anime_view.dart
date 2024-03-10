@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_list_anime/app/modules/profile/controllers/profile_controller.dart';
 import 'package:flutter_list_anime/app/routes/app_pages.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -10,6 +11,7 @@ class SearchAnimeView extends GetView<SearchAnimeController> {
   const SearchAnimeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final darkMode = Get.put(ProfileController());
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -36,7 +38,9 @@ class SearchAnimeView extends GetView<SearchAnimeController> {
                     padding: const EdgeInsets.only(left: 5),
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Colors.grey[200],
+                      color: (darkMode.isDark.value)
+                          ? Colors.grey[800]
+                          : Colors.grey[200],
                       borderRadius: BorderRadius.circular(15),
                       boxShadow: const [
                         BoxShadow(
@@ -51,9 +55,11 @@ class SearchAnimeView extends GetView<SearchAnimeController> {
                       controller: controller.cariAnime,
                       decoration: InputDecoration(
                         focusColor: Colors.white,
-                        prefixIcon: const Icon(
+                        prefixIcon: Icon(
                           Icons.search,
-                          color: Colors.black,
+                          color: (darkMode.isDark.value)
+                              ? Colors.white
+                              : Colors.black,
                         ),
                         suffixIcon: (controller.isHide.value)
                             ? null
@@ -63,29 +69,36 @@ class SearchAnimeView extends GetView<SearchAnimeController> {
                                 focusColor: Colors.transparent,
                                 splashColor: Colors.transparent,
                                 onTap: () => controller.resetInput(),
-                                child: const Padding(
-                                  padding: EdgeInsets.only(right: 25),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 25),
                                   child: Icon(
                                     FontAwesomeIcons.circleXmark,
-                                    color: Colors.black,
+                                    color: (darkMode.isDark.value)
+                                        ? Colors.white
+                                        : Colors.black,
                                   ),
                                 ),
                               ),
                         border: InputBorder.none,
                         hintText: "Apa yang ingin kamu cari?",
-                        hintStyle: const TextStyle(
+                        hintStyle: TextStyle(
                           fontWeight: FontWeight.w500,
-                          color: Colors.black,
+                          color: (darkMode.isDark.value)
+                              ? Colors.white
+                              : Colors.black,
                           fontSize: 17,
                         ),
                       ),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.w500,
-                        color: Colors.black,
+                        color: (darkMode.isDark.value)
+                            ? Colors.white
+                            : Colors.black,
                         fontSize: 17,
                       ),
                       textInputAction: TextInputAction.search,
-                      cursorColor: Colors.black,
+                      cursorColor:
+                          (darkMode.isDark.value) ? Colors.white : Colors.black,
                       onChanged: (value) => controller.fetchSearchAnime(value),
                       onSubmitted: (value) =>
                           controller.fetchSearchAnime(value),

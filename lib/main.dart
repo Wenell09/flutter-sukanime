@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
+      themeMode: ThemeMode.light,
       title: "Flutter List Anime",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,

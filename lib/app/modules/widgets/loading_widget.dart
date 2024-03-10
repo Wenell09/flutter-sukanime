@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class LoadingWidget extends StatelessWidget {
   final String text;
   final double mediaQuery;
+  final Color color;
   const LoadingWidget({
     super.key,
     required this.text,
     required this.mediaQuery,
+    required this.color,
   });
 
   @override
@@ -19,9 +21,9 @@ class LoadingWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const CircularProgressIndicator(
+          CircularProgressIndicator(
             backgroundColor: Colors.blue,
-            color: Colors.black,
+            color: color,
             strokeWidth: 10,
             strokeAlign: 3,
           ),
@@ -30,11 +32,11 @@ class LoadingWidget extends StatelessWidget {
           ),
           Text(
             text,
-            style: const TextStyle(
+            style: TextStyle(
               // fontFamily: "Poppins",
               fontWeight: FontWeight.w500,
               fontSize: 20,
-              color: Colors.black,
+              color: color,
             ),
           )
         ],
