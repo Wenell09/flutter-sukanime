@@ -14,6 +14,8 @@ abstract class Routes {
   static const SEARCH = _Paths.SEARCH;
   static const SEARCH_ANIME = _Paths.SEARCH_ANIME;
   static const PROFILE = _Paths.PROFILE;
+  static const LOGIN = _Paths.LOGIN;
+  static const REGISTER = _Paths.REGISTER;
 }
 
 abstract class _Paths {
@@ -27,4 +29,6 @@ abstract class _Paths {
   static const SEARCH = '/search';
   static const SEARCH_ANIME = '/search-anime';
   static const PROFILE = '/profile';
+  static const LOGIN = '/login';
+  static const REGISTER = '/register';
 }
