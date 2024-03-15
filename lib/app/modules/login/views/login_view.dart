@@ -49,40 +49,49 @@ class LoginView extends GetView<LoginController> {
                 const SizedBox(
                   height: 40,
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  padding: const EdgeInsets.all(8),
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: (darkMode.isDark.value)
-                        ? Colors.grey[700]
-                        : Colors.grey[300],
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Row(
-                    children: [
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Flexible(
-                        flex: 1,
-                        child: Icon(
-                          FontAwesomeIcons.google,
-                          size: 20,
+                InkWell(
+                  onTap: () async {
+                    controller.signInGoogle();
+                  },
+                  highlightColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    padding: const EdgeInsets.all(8),
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: (darkMode.isDark.value)
+                          ? Colors.grey[700]
+                          : Colors.grey[300],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Row(
+                      children: [
+                        SizedBox(
+                          width: 20,
                         ),
-                      ),
-                      Expanded(
-                        flex: 6,
-                        child: Text(
-                          "Login dengan Google",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                        Flexible(
+                          flex: 1,
+                          child: Icon(
+                            FontAwesomeIcons.google,
+                            size: 20,
                           ),
                         ),
-                      )
-                    ],
+                        Expanded(
+                          flex: 6,
+                          child: Text(
+                            "Login dengan Google",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(
