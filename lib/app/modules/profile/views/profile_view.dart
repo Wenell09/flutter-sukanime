@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_list_anime/app/modules/login/controllers/login_controller.dart';
 import 'package:flutter_list_anime/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import '../controllers/profile_controller.dart';
@@ -8,6 +9,7 @@ class ProfileView extends GetView<ProfileController> {
   const ProfileView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final loginController = Get.put(LoginController());
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
@@ -126,6 +128,37 @@ class ProfileView extends GetView<ProfileController> {
                     ),
                   ),
                   const Divider(),
+                  (controller.userName.value == "")
+                      ? Container()
+                      : Column(
+                          children: [
+                            InkWell(
+                              highlightColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              onTap: () => loginController.signOut(),
+                              child: const ListTile(
+                                leading: Icon(
+                                  Icons.logout,
+                                  size: 30,
+                                ),
+                                title: Text(
+                                  "Logout",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                trailing: Icon(
+                                  Icons.navigate_next_outlined,
+                                  size: 30,
+                                ),
+                              ),
+                            ),
+                            const Divider(),
+                          ],
+                        ),
                   ListTile(
                     leading: const Icon(
                       Icons.dark_mode,

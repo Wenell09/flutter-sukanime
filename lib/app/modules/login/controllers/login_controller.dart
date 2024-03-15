@@ -5,6 +5,7 @@ import 'package:flutter_list_anime/app/modules/profile/controllers/profile_contr
 
 class LoginController extends GetxController {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
 
   Future<UserCredential?> signInGoogle() async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -40,5 +41,16 @@ class LoginController extends GetxController {
       return result;
     }
     return null;
+  }
+
+  Future<void> signOut() async {
+    // Sign out dari Firebase
+    await firebaseAuth.signOut();
+
+    // Sign out dari Google
+    await googleSignIn.signOut();
+
+    // Bersihkan data pengguna
+    Get.find<ProfileController>().setUserDetails("", "", "");
   }
 }
