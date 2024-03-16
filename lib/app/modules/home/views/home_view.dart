@@ -13,7 +13,7 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'MYNIMELIST',
+          'Sukanime',
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),

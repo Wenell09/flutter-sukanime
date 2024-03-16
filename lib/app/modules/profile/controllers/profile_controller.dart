@@ -46,6 +46,15 @@ class ProfileController extends GetxController {
     Get.changeTheme(getDarkMode ? ThemeData.dark() : ThemeData.light());
   }
 
+  String cutString(String inputString) {
+    int index = inputString.indexOf(' ');
+    if (index != -1) {
+      return inputString.substring(0, index).trim();
+    } else {
+      return inputString;
+    }
+  }
+
   @override
   void onInit() {
     loadDarkMode();

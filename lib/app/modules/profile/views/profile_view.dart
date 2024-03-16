@@ -21,13 +21,11 @@ class ProfileView extends GetView<ProfileController> {
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.28,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.grey,
                       image: DecorationImage(
-                        image: NetworkImage(
-                          (controller.userImage.value == "")
-                              ? "https://cdn.pixabay.com/photo/2016/05/05/02/37/sunset-1373171_1280.jpg"
-                              : controller.userImage.value,
+                        image: AssetImage(
+                          "assets/banner.jpeg",
                         ),
                         fit: BoxFit.cover,
                       ),
@@ -47,7 +45,7 @@ class ProfileView extends GetView<ProfileController> {
                       child: Text(
                         (controller.userName.value == "")
                             ? "Login"
-                            : controller.userName.value,
+                            : controller.cutString(controller.userName.value),
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -198,14 +196,19 @@ class ProfileView extends GetView<ProfileController> {
                   width: 125,
                   height: 125,
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        (controller.userImage.value == "")
-                            ? "https://cdn.pixabay.com/photo/2016/05/05/02/37/sunset-1373171_1280.jpg"
-                            : controller.userImage.value,
-                      ),
-                      fit: BoxFit.cover,
-                    ),
+                    image: (controller.userImage.value == "")
+                        ? const DecorationImage(
+                            image: AssetImage(
+                              "assets/profilePicture.png",
+                            ),
+                            fit: BoxFit.cover,
+                          )
+                        : DecorationImage(
+                            image: NetworkImage(
+                              controller.userImage.value,
+                            ),
+                            fit: BoxFit.cover,
+                          ),
                     shape: BoxShape.circle,
                     color: Colors.grey,
                     border: Border.all(

@@ -15,32 +15,22 @@ class SplashView extends GetView<SplashController> {
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.white,
+              Colors.blue[900]!,
               Colors.blue,
             ],
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              "assets/logoAnime.png",
-              width: 250,
-              height: 250,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text(
-              "MYNIMELIST",
-              style: TextStyle(fontSize: 32, color: Colors.white),
-            ),
-          ],
+        child: Center(
+          child: Image.asset(
+            "assets/logosukanime.png",
+            width: 200,
+            height: 200,
+          ),
         ),
       ),
     );
