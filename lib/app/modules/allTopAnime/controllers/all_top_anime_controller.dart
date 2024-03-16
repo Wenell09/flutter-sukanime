@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/material.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_list_anime/app/data/base/base_url.dart';
 import 'package:flutter_list_anime/app/data/models/anime_model.dart';
 import 'package:get/get.dart';
@@ -10,6 +13,9 @@ class AllTopAnimeController extends GetxController {
   var allTopAnime = <AnimeModel>[].obs;
   var currentPage = 1.obs;
   var isFirstPage = true.obs;
+  var connectionType = 0.obs;
+  late StreamSubscription streamSubscription;
+  final Connectivity connectivity = Connectivity();
 
   Future<void> fetchAllTopAnime(int page) async {
     try {
@@ -48,9 +54,54 @@ class AllTopAnimeController extends GetxController {
     }
   }
 
+  Future<void> getConnectivityType() async {
+    late ConnectivityResult connectivityResult;
+    try {
+      connectivityResult = await (connectivity.checkConnectivity());
+    } on PlatformException catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return updateState(connectivityResult);
+  }
+
+  updateState(ConnectivityResult result) async {
+    switch (result) {
+      case ConnectivityResult.wifi:
+        connectionType.value = 1;
+        if (allTopAnime.isEmpty) {
+          await fetchAllTopAnime(1);
+        }
+        break;
+      case ConnectivityResult.mobile:
+        connectionType.value = 2;
+        if (allTopAnime.isEmpty) {
+          await fetchAllTopAnime(1);
+        }
+        break;
+      case ConnectivityResult.none:
+        connectionType.value = 0;
+        break;
+      default:
+        Get.snackbar("Error", "Failed to get connection type");
+        break;
+    }
+  }
+
   @override
-  void onInit() {
-    fetchAllTopAnime(1);
+  void onInit() async {
+    streamSubscription = connectivity.onConnectivityChanged.listen(updateState);
+    await getConnectivityType();
+    if (connectionType.value != 0) {
+      await fetchAllTopAnime(1);
+    }
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    streamSubscription.cancel();
+    super.onClose();
   }
 }

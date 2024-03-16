@@ -1,4 +1,8 @@
+import 'dart:async';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,6 +12,9 @@ class ProfileController extends GetxController {
   final userName = "".obs;
   final userEmail = "".obs;
   final userImage = "".obs;
+  var connectionType = 0.obs;
+  late StreamSubscription streamSubscription;
+  final Connectivity connectivity = Connectivity();
 
   setUserDetails(String name, String email, String image) async {
     final prefs = await SharedPreferences.getInstance();
@@ -55,10 +62,47 @@ class ProfileController extends GetxController {
     }
   }
 
+  Future<void> getConnectivityType() async {
+    late ConnectivityResult connectivityResult;
+    try {
+      connectivityResult = await (connectivity.checkConnectivity());
+    } on PlatformException catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return updateState(connectivityResult);
+  }
+
+  updateState(ConnectivityResult result) async {
+    switch (result) {
+      case ConnectivityResult.wifi:
+        connectionType.value = 1;
+        break;
+      case ConnectivityResult.mobile:
+        connectionType.value = 2;
+        break;
+      case ConnectivityResult.none:
+        connectionType.value = 0;
+        break;
+      default:
+        Get.snackbar("Error", "Failed to get connection type");
+        break;
+    }
+  }
+
   @override
-  void onInit() {
+  void onInit() async {
+    streamSubscription = connectivity.onConnectivityChanged.listen(updateState);
+    await getConnectivityType();
     loadDarkMode();
     getUser();
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    streamSubscription.cancel();
+    super.onClose();
   }
 }
