@@ -139,7 +139,65 @@ class ProfileView extends GetView<ProfileController> {
                                     hoverColor: Colors.transparent,
                                     focusColor: Colors.transparent,
                                     splashColor: Colors.transparent,
-                                    onTap: () => loginController.signOut(),
+                                    onTap: () {
+                                      showDialog(
+                                        barrierDismissible: true,
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            contentPadding:
+                                                const EdgeInsets.only(
+                                              top: 20,
+                                              bottom: 20,
+                                            ),
+                                            actionsAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            content: const Text(
+                                              textAlign: TextAlign.center,
+                                              "Apakah Anda yakin untuk keluar?",
+                                              style: TextStyle(
+                                                fontSize: 17,
+                                              ),
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () =>
+                                                    Navigator.of(context).pop(),
+                                                child: Text(
+                                                  "Batal",
+                                                  style: TextStyle(
+                                                    color: (controller
+                                                            .isDark.value)
+                                                        ? Colors.grey[400]
+                                                        : Colors.grey,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  loginController.signOut();
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text(
+                                                  "Logout",
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.blue,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
                                     child: const ListTile(
                                       leading: Icon(
                                         Icons.logout,
