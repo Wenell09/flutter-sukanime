@@ -10,7 +10,7 @@ class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final darkMode = Get.put(ProfileController());
+    final profile = Get.put(ProfileController());
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -30,7 +30,7 @@ class HomeView extends GetView<HomeController> {
               : (controller.isLoading.value)
                   ? LoadingWidget(
                       color:
-                          (darkMode.isDark.value) ? Colors.white : Colors.black,
+                          (profile.isDark.value) ? Colors.white : Colors.black,
                       text: "Memuat list Anime....",
                       mediaQuery: MediaQuery.of(context).size.height * 0.9,
                     )
@@ -143,12 +143,66 @@ class HomeView extends GetView<HomeController> {
                                                 ),
                                               ),
                                             ),
-                                            const Flexible(
+                                            Flexible(
                                               flex: 1,
-                                              child: Icon(
-                                                Icons.bookmark_border_outlined,
-                                                color: Colors.blue,
-                                                size: 30,
+                                              child: InkWell(
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                focusColor: Colors.transparent,
+                                                splashColor: Colors.transparent,
+                                                onTap: () {
+                                                  bool isFavorite = controller
+                                                      .favoritesList
+                                                      .where((favorite) =>
+                                                          favorite["id"] ==
+                                                              ProfileController
+                                                                  .userId
+                                                                  .value &&
+                                                          favorite["malId"] ==
+                                                              animeTopCard
+                                                                  .malId)
+                                                      .isNotEmpty;
+                                                  if (isFavorite) {
+                                                    controller.deleteFavorites(
+                                                      ProfileController
+                                                          .userId.value,
+                                                      ProfileController
+                                                          .userName.value,
+                                                      animeTopCard.malId,
+                                                    );
+                                                  } else {
+                                                    controller.addFavorites(
+                                                      ProfileController
+                                                          .userId.value,
+                                                      ProfileController
+                                                          .userName.value,
+                                                      animeTopCard.malId,
+                                                      animeTopCard.title,
+                                                      animeTopCard.imageUrl,
+                                                      animeTopCard.airedFrom,
+                                                    );
+                                                  }
+                                                },
+                                                child: Obx(() => Icon(
+                                                      (controller.favoritesList
+                                                              .where((favorite) =>
+                                                                  favorite[
+                                                                          "id"] ==
+                                                                      ProfileController
+                                                                          .userId
+                                                                          .value &&
+                                                                  favorite[
+                                                                          "malId"] ==
+                                                                      animeTopCard
+                                                                          .malId)
+                                                              .isNotEmpty)
+                                                          ? Icons.bookmark
+                                                          : Icons
+                                                              .bookmark_border_outlined,
+                                                      color: Colors.blue,
+                                                      size: 30,
+                                                    )),
                                               ),
                                             ),
                                           ],
@@ -254,12 +308,66 @@ class HomeView extends GetView<HomeController> {
                                                 ),
                                               ),
                                             ),
-                                            const Flexible(
+                                            Flexible(
                                               flex: 1,
-                                              child: Icon(
-                                                Icons.bookmark_border_outlined,
-                                                color: Colors.blue,
-                                                size: 30,
+                                              child: InkWell(
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                focusColor: Colors.transparent,
+                                                splashColor: Colors.transparent,
+                                                onTap: () {
+                                                  bool isFavorite = controller
+                                                      .favoritesList
+                                                      .where((favorite) =>
+                                                          favorite["id"] ==
+                                                              ProfileController
+                                                                  .userId
+                                                                  .value &&
+                                                          favorite["malId"] ==
+                                                              animeRecomCard
+                                                                  .malId)
+                                                      .isNotEmpty;
+                                                  if (isFavorite) {
+                                                    controller.deleteFavorites(
+                                                      ProfileController
+                                                          .userId.value,
+                                                      ProfileController
+                                                          .userName.value,
+                                                      animeRecomCard.malId,
+                                                    );
+                                                  } else {
+                                                    controller.addFavorites(
+                                                      ProfileController
+                                                          .userId.value,
+                                                      ProfileController
+                                                          .userName.value,
+                                                      animeRecomCard.malId,
+                                                      animeRecomCard.title,
+                                                      animeRecomCard.imageUrl,
+                                                      animeRecomCard.airedFrom,
+                                                    );
+                                                  }
+                                                },
+                                                child: Obx(() => Icon(
+                                                      (controller.favoritesList
+                                                              .where((favorite) =>
+                                                                  favorite[
+                                                                          "id"] ==
+                                                                      ProfileController
+                                                                          .userId
+                                                                          .value &&
+                                                                  favorite[
+                                                                          "malId"] ==
+                                                                      animeRecomCard
+                                                                          .malId)
+                                                              .isNotEmpty)
+                                                          ? Icons.bookmark
+                                                          : Icons
+                                                              .bookmark_border_outlined,
+                                                      color: Colors.blue,
+                                                      size: 30,
+                                                    )),
                                               ),
                                             ),
                                           ],

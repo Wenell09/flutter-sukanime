@@ -46,10 +46,10 @@ class ProfileView extends GetView<ProfileController> {
                             onTap: () =>
                                 Navigator.of(context).pushNamed(Routes.LOGIN),
                             child: Text(
-                              (controller.userName.value == "")
+                              (ProfileController.userName.value == "")
                                   ? "Login"
-                                  : controller
-                                      .cutString(controller.userName.value),
+                                  : controller.cutString(
+                                      ProfileController.userName.value),
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
@@ -66,9 +66,9 @@ class ProfileView extends GetView<ProfileController> {
                             ),
                           ),
                           trailing: Text(
-                            (controller.userName.value == "")
+                            (ProfileController.userName.value == "")
                                 ? "***********"
-                                : controller.userName.value,
+                                : ProfileController.userName.value,
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
@@ -84,9 +84,9 @@ class ProfileView extends GetView<ProfileController> {
                             ),
                           ),
                           trailing: Text(
-                            (controller.userEmail.value == "")
+                            (ProfileController.userEmail.value == "")
                                 ? "***********"
-                                : controller.userEmail.value,
+                                : ProfileController.userEmail.value,
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
@@ -118,7 +118,7 @@ class ProfileView extends GetView<ProfileController> {
                             size: 30,
                           ),
                           title: Text(
-                            "Whitelist Anime",
+                            "Favorite's Anime",
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
@@ -130,7 +130,7 @@ class ProfileView extends GetView<ProfileController> {
                           ),
                         ),
                         const Divider(),
-                        (controller.userName.value == "")
+                        (ProfileController.userName.value == "")
                             ? Container()
                             : Column(
                                 children: [
@@ -141,7 +141,7 @@ class ProfileView extends GetView<ProfileController> {
                                     splashColor: Colors.transparent,
                                     onTap: () {
                                       showDialog(
-                                        barrierDismissible: true,
+                                        barrierDismissible: false,
                                         context: context,
                                         builder: (context) {
                                           return AlertDialog(

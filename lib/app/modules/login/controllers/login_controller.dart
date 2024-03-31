@@ -32,6 +32,7 @@ class LoginController extends GetxController {
 
       if (userDetail != null) {
         Get.find<ProfileController>().setUserDetails(
+          userDetail.uid,
           userDetail.displayName ?? "",
           userDetail.email ?? "",
           userDetail.photoURL ?? "",
@@ -51,6 +52,6 @@ class LoginController extends GetxController {
     await googleSignIn.signOut();
 
     // Bersihkan data pengguna
-    Get.find<ProfileController>().setUserDetails("", "", "");
+    Get.find<ProfileController>().setUserDetails("", "", "", "");
   }
 }

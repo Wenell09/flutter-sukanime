@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_list_anime/app/data/base/base_url.dart';
 import 'package:flutter_list_anime/app/data/models/anime_model.dart';
+import 'package:flutter_list_anime/app/modules/profile/controllers/profile_controller.dart';
 import 'package:get/get.dart';
 import "package:http/http.dart" as http;
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -12,9 +14,11 @@ class HomeController extends GetxController {
   var isLoading = true.obs;
   var animeTopCard = <AnimeModel>[].obs;
   var animeRecomendCard = <AnimeModel>[].obs;
+  RxList<Map<String, dynamic>> favoritesList = RxList<Map<String, dynamic>>();
   var connectionType = 0.obs;
   late StreamSubscription streamSubscription;
   final Connectivity connectivity = Connectivity();
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<void> fetchTopAnime() async {
     try {
@@ -41,6 +45,52 @@ class HomeController extends GetxController {
     } catch (e) {
       debugPrint("Gagal fetch $e");
     }
+  }
+
+  void addFavorites(
+    String id,
+    String username,
+    int malId,
+    String title,
+    String imageUrl,
+    String airedFrom,
+  ) async {
+    CollectionReference favorites = firestore.collection("favorites_$username");
+    favorites.add({
+      "id": id,
+      "username": username,
+      "malId": malId,
+      "title": title,
+      "imageUrl": imageUrl,
+      "airedFrom": airedFrom,
+      "createdAt": FieldValue.serverTimestamp(),
+    });
+    getFavorites(username);
+  }
+
+  void deleteFavorites(String id, String username, int malId) async {
+    QuerySnapshot favoritesSnapshot = await firestore
+        .collection("favorites_$username")
+        .where("id", isEqualTo: id)
+        .where("malId", isEqualTo: malId)
+        .get();
+
+    // Loop through the documents to delete each matching document
+    for (QueryDocumentSnapshot doc in favoritesSnapshot.docs) {
+      doc.reference.delete();
+    }
+    getFavorites(username);
+  }
+
+  Future<void> getFavorites(String username) async {
+    QuerySnapshot favoritesSnapshot = await FirebaseFirestore.instance
+        .collection("favorites_$username")
+        .get();
+    favoritesList.assignAll(
+      favoritesSnapshot.docs
+          .map((doc) => doc.data() as Map<String, dynamic>)
+          .toList(),
+    );
   }
 
   Future<void> getConnectivityType() async {
@@ -87,6 +137,7 @@ class HomeController extends GetxController {
     if (connectionType.value != 0) {
       await fetchTopAnime();
       await fetchRecomAnime();
+      await getFavorites(ProfileController.userName.value);
     }
     super.onInit();
   }

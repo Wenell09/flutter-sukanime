@@ -9,18 +9,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ProfileController extends GetxController {
   var isDark = false.obs;
   bool get isDarkMode => isDark.value;
-  final userName = "".obs;
-  final userEmail = "".obs;
+  static final userId = "".obs;
+  static final userName = "".obs;
+  static final userEmail = "".obs;
   final userImage = "".obs;
   var connectionType = 0.obs;
   late StreamSubscription streamSubscription;
   final Connectivity connectivity = Connectivity();
 
-  setUserDetails(String name, String email, String image) async {
+  setUserDetails(String id, String name, String email, String image) async {
     final prefs = await SharedPreferences.getInstance();
+    userId.value = id;
     userName.value = name;
     userEmail.value = email;
     userImage.value = image;
+    prefs.setString('id', id);
     prefs.setString('displayName', name);
     prefs.setString('email', email);
     prefs.setString('photoURL', image);
@@ -28,9 +31,11 @@ class ProfileController extends GetxController {
 
   getUser() async {
     final prefs = await SharedPreferences.getInstance();
+    final id = prefs.getString("id") ?? "";
     final nama = prefs.getString("displayName") ?? "";
     final email = prefs.getString("email") ?? "";
     final image = prefs.getString("photoURL") ?? "";
+    userId.value = id;
     userName.value = nama;
     userEmail.value = email;
     userImage.value = image;
