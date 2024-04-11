@@ -152,6 +152,32 @@ class HomeView extends GetView<HomeController> {
                                                 focusColor: Colors.transparent,
                                                 splashColor: Colors.transparent,
                                                 onTap: () {
+                                                  if (ProfileController
+                                                          .userId.value ==
+                                                      "") {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          AlertDialog(
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        content: const Text(
+                                                          "Anda harus Login!",
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: TextStyle(
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
                                                   bool isFavorite = controller
                                                       .favoritesList
                                                       .where((favorite) =>
@@ -181,6 +207,11 @@ class HomeView extends GetView<HomeController> {
                                                       animeTopCard.title,
                                                       animeTopCard.imageUrl,
                                                       animeTopCard.airedFrom,
+                                                      animeTopCard.type,
+                                                      animeTopCard.rating,
+                                                      animeTopCard.score,
+                                                      animeTopCard.members,
+                                                      animeTopCard.youtubeUrl,
                                                     );
                                                   }
                                                 },
@@ -346,6 +377,11 @@ class HomeView extends GetView<HomeController> {
                                                       animeRecomCard.title,
                                                       animeRecomCard.imageUrl,
                                                       animeRecomCard.airedFrom,
+                                                      animeRecomCard.type,
+                                                      animeRecomCard.rating,
+                                                      animeRecomCard.score,
+                                                      animeRecomCard.members,
+                                                      animeRecomCard.youtubeUrl,
                                                     );
                                                   }
                                                 },

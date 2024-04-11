@@ -54,6 +54,11 @@ class HomeController extends GetxController {
     String title,
     String imageUrl,
     String airedFrom,
+    String type,
+    String rating,
+    double score,
+    int members,
+    String youtubeUrl,
   ) async {
     CollectionReference favorites = firestore.collection("favorites_$username");
     favorites.add({
@@ -63,6 +68,11 @@ class HomeController extends GetxController {
       "title": title,
       "imageUrl": imageUrl,
       "airedFrom": airedFrom,
+      "type": type,
+      "rating": rating,
+      "score": score,
+      "members": members,
+      "youtubeUrl": youtubeUrl,
       "createdAt": FieldValue.serverTimestamp(),
     });
     getFavorites(username);

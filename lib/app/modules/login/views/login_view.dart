@@ -42,6 +42,9 @@ class LoginView extends GetView<LoginController> {
                         width: 200,
                         height: 200,
                       ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       const Text(
                         "Login Sukanime",
                         style: TextStyle(
@@ -50,7 +53,7 @@ class LoginView extends GetView<LoginController> {
                         ),
                       ),
                       const SizedBox(
-                        height: 40,
+                        height: 20,
                       ),
                       InkWell(
                         onTap: () async {
@@ -63,7 +66,7 @@ class LoginView extends GetView<LoginController> {
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.8,
                           padding: const EdgeInsets.all(8),
-                          height: 40,
+                          height: 45,
                           decoration: BoxDecoration(
                             color: (profileController.isDark.value)
                                 ? Colors.grey[700]
@@ -89,51 +92,12 @@ class LoginView extends GetView<LoginController> {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 16,
+                                    fontSize: 20,
                                   ),
                                 ),
                               )
                             ],
                           ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        padding: const EdgeInsets.all(8),
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: (profileController.isDark.value)
-                              ? Colors.grey[700]
-                              : Colors.grey[300],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Row(
-                          children: [
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Flexible(
-                              flex: 1,
-                              child: Icon(
-                                Icons.mail,
-                                size: 20,
-                              ),
-                            ),
-                            Expanded(
-                              flex: 6,
-                              child: Text(
-                                "Login dengan Email",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            )
-                          ],
                         ),
                       ),
                     ],

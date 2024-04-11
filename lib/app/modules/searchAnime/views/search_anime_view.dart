@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_list_anime/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter_list_anime/app/modules/profile/controllers/profile_controller.dart';
 import 'package:flutter_list_anime/app/modules/widgets/nointernet_widget.dart';
 import 'package:flutter_list_anime/app/routes/app_pages.dart';
@@ -12,6 +13,7 @@ class SearchAnimeView extends GetView<SearchAnimeController> {
   const SearchAnimeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final homeController = Get.put(HomeController());
     final darkMode = Get.put(ProfileController());
     return Scaffold(
       appBar: AppBar(
@@ -215,14 +217,109 @@ class SearchAnimeView extends GetView<SearchAnimeController> {
                                                       ),
                                                     ),
                                                   ),
-                                                  const Flexible(
-                                                    flex: 1,
-                                                    child: Icon(
-                                                      Icons
-                                                          .bookmark_border_outlined,
-                                                      color: Colors.blue,
-                                                      size: 30,
-                                                    ),
+                                                  InkWell(
+                                                    highlightColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    onTap: () {
+                                                      if (ProfileController
+                                                              .userId.value ==
+                                                          "") {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (context) =>
+                                                              AlertDialog(
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                            ),
+                                                            content: const Text(
+                                                              "Anda harus Login!",
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: TextStyle(
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
+                                                      bool isFavorite = homeController
+                                                          .favoritesList
+                                                          .where((favorite) =>
+                                                              favorite["id"] ==
+                                                                  ProfileController
+                                                                      .userId
+                                                                      .value &&
+                                                              favorite[
+                                                                      "malId"] ==
+                                                                  animeSearchCard
+                                                                      .malId)
+                                                          .isNotEmpty;
+                                                      if (isFavorite) {
+                                                        homeController
+                                                            .deleteFavorites(
+                                                          ProfileController
+                                                              .userId.value,
+                                                          ProfileController
+                                                              .userName.value,
+                                                          animeSearchCard.malId,
+                                                        );
+                                                      } else {
+                                                        homeController
+                                                            .addFavorites(
+                                                          ProfileController
+                                                              .userId.value,
+                                                          ProfileController
+                                                              .userName.value,
+                                                          animeSearchCard.malId,
+                                                          animeSearchCard.title,
+                                                          animeSearchCard
+                                                              .imageUrl,
+                                                          animeSearchCard
+                                                              .airedFrom,
+                                                          animeSearchCard.type,
+                                                          animeSearchCard
+                                                              .rating,
+                                                          animeSearchCard.score,
+                                                          animeSearchCard
+                                                              .members,
+                                                          animeSearchCard
+                                                              .youtubeUrl,
+                                                        );
+                                                      }
+                                                    },
+                                                    child: Obx(() => Icon(
+                                                          (homeController
+                                                                  .favoritesList
+                                                                  .where((favorite) =>
+                                                                      favorite[
+                                                                              "id"] ==
+                                                                          ProfileController
+                                                                              .userId
+                                                                              .value &&
+                                                                      favorite[
+                                                                              "malId"] ==
+                                                                          animeSearchCard
+                                                                              .malId)
+                                                                  .isNotEmpty)
+                                                              ? Icons.bookmark
+                                                              : Icons
+                                                                  .bookmark_border_outlined,
+                                                          color: Colors.blue,
+                                                          size: 30,
+                                                        )),
                                                   ),
                                                 ],
                                               ),

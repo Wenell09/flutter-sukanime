@@ -5,6 +5,8 @@ import '../modules/allTopAnime/views/all_top_anime_view.dart';
 import '../modules/bottomBar/bindings/bottom_bar_binding.dart';
 import '../modules/bottomBar/views/bottom_bar_view.dart';
 import '../modules/detail/views/detail_view.dart';
+import '../modules/favorite/bindings/favorite_binding.dart';
+import '../modules/favorite/views/favorite_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -64,6 +66,11 @@ class AppPages {
       name: _Paths.LOGIN,
       page: () => const LoginView(),
       binding: LoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.FAVORITE,
+      page: () => const FavoriteView(),
+      binding: FavoriteBinding(),
     ),
   ];
 }
