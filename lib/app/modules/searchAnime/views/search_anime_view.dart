@@ -118,12 +118,13 @@ class SearchAnimeView extends GetView<SearchAnimeController> {
                         (controller.isLoading.value)
                             ? Column(
                                 children: [
-                                  const SizedBox(
-                                    height: 130,
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.18,
                                   ),
                                   Icon(
                                     FontAwesomeIcons.magnifyingGlass,
-                                    size: 80,
+                                    size: 130,
                                     color: Colors.grey[800],
                                   ),
                                   const SizedBox(
@@ -133,7 +134,7 @@ class SearchAnimeView extends GetView<SearchAnimeController> {
                                     "Cari anime kesukaanmu disini!",
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      fontSize: 16,
+                                      fontSize: 18,
                                     ),
                                   ),
                                 ],
@@ -276,6 +277,21 @@ class SearchAnimeView extends GetView<SearchAnimeController> {
                                                               .userName.value,
                                                           animeSearchCard.malId,
                                                         );
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          const SnackBar(
+                                                            duration: Duration(
+                                                              seconds: 1,
+                                                            ),
+                                                            content: Text(
+                                                              "Berhasil dihapus dari daftar favorite!",
+                                                              style: TextStyle(
+                                                                fontSize: 16,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
                                                       } else {
                                                         homeController
                                                             .addFavorites(
@@ -297,6 +313,21 @@ class SearchAnimeView extends GetView<SearchAnimeController> {
                                                               .members,
                                                           animeSearchCard
                                                               .youtubeUrl,
+                                                        );
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          const SnackBar(
+                                                            duration: Duration(
+                                                              seconds: 1,
+                                                            ),
+                                                            content: Text(
+                                                              "Berhasil menambahkan ke daftar favorite!",
+                                                              style: TextStyle(
+                                                                fontSize: 16,
+                                                              ),
+                                                            ),
+                                                          ),
                                                         );
                                                       }
                                                     },

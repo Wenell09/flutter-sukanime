@@ -389,7 +389,7 @@ class DetailView extends StatelessWidget {
                 ),
               ],
             ),
-            const Text("INI REVIEWS"),
+            const Text("INI FITUR REVIEWS BELUM JADI!!"),
           ],
         ),
       ),

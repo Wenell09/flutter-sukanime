@@ -197,6 +197,21 @@ class HomeView extends GetView<HomeController> {
                                                           .userName.value,
                                                       animeTopCard.malId,
                                                     );
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      const SnackBar(
+                                                        duration: Duration(
+                                                          seconds: 1,
+                                                        ),
+                                                        content: Text(
+                                                          "Berhasil dihapus dari daftar favorite!",
+                                                          style: TextStyle(
+                                                            fontSize: 16,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
                                                   } else {
                                                     controller.addFavorites(
                                                       ProfileController
@@ -213,26 +228,48 @@ class HomeView extends GetView<HomeController> {
                                                       animeTopCard.members,
                                                       animeTopCard.youtubeUrl,
                                                     );
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      const SnackBar(
+                                                        duration: Duration(
+                                                          seconds: 1,
+                                                        ),
+                                                        content: Text(
+                                                          "Berhasil menambahkan ke daftar favorite!",
+                                                          style: TextStyle(
+                                                            fontSize: 16,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
                                                   }
                                                 },
-                                                child: Obx(() => Icon(
-                                                      (controller.favoritesList
-                                                              .where((favorite) =>
-                                                                  favorite[
-                                                                          "id"] ==
-                                                                      ProfileController
-                                                                          .userId
-                                                                          .value &&
-                                                                  favorite[
-                                                                          "malId"] ==
-                                                                      animeTopCard
-                                                                          .malId)
-                                                              .isNotEmpty)
-                                                          ? Icons.bookmark
-                                                          : Icons
-                                                              .bookmark_border_outlined,
-                                                      color: Colors.blue,
-                                                      size: 30,
+                                                child: Obx(() => Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                        right: 5,
+                                                      ),
+                                                      child: Icon(
+                                                        (controller
+                                                                .favoritesList
+                                                                .where((favorite) =>
+                                                                    favorite[
+                                                                            "id"] ==
+                                                                        ProfileController
+                                                                            .userId
+                                                                            .value &&
+                                                                    favorite[
+                                                                            "malId"] ==
+                                                                        animeTopCard
+                                                                            .malId)
+                                                                .isNotEmpty)
+                                                            ? Icons.bookmark
+                                                            : Icons
+                                                                .bookmark_border_outlined,
+                                                        color: Colors.blue,
+                                                        size: 30,
+                                                      ),
                                                     )),
                                               ),
                                             ),

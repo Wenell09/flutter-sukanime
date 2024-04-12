@@ -94,24 +94,6 @@ class ProfileView extends GetView<ProfileController> {
                           ),
                         ),
                         const Divider(),
-                        const ListTile(
-                          leading: Icon(
-                            Icons.person,
-                            size: 30,
-                          ),
-                          title: Text(
-                            "Profile details",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          trailing: Icon(
-                            Icons.navigate_next_outlined,
-                            size: 30,
-                          ),
-                        ),
-                        const Divider(),
                         InkWell(
                           highlightColor: Colors.transparent,
                           hoverColor: Colors.transparent,

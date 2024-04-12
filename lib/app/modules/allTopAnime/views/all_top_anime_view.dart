@@ -238,6 +238,20 @@ class AllTopAnimeView extends GetView<AllTopAnimeController> {
                                                         .userName.value,
                                                     animeTopCard.malId,
                                                   );
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    const SnackBar(
+                                                      duration: Duration(
+                                                        seconds: 1,
+                                                      ),
+                                                      content: Text(
+                                                        "Berhasil dihapus dari daftar favorite!",
+                                                        style: TextStyle(
+                                                          fontSize: 16,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
                                                 } else {
                                                   homeController.addFavorites(
                                                     ProfileController
@@ -253,6 +267,20 @@ class AllTopAnimeView extends GetView<AllTopAnimeController> {
                                                     animeTopCard.score,
                                                     animeTopCard.members,
                                                     animeTopCard.youtubeUrl,
+                                                  );
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    const SnackBar(
+                                                      duration: Duration(
+                                                        seconds: 1,
+                                                      ),
+                                                      content: Text(
+                                                        "Berhasil menambahkan ke daftar favorite!",
+                                                        style: TextStyle(
+                                                          fontSize: 16,
+                                                        ),
+                                                      ),
+                                                    ),
                                                   );
                                                 }
                                               },
