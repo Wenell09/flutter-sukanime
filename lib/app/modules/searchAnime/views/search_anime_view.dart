@@ -255,80 +255,91 @@ class SearchAnimeView extends GetView<SearchAnimeController> {
                                                             ),
                                                           ),
                                                         );
-                                                      }
-                                                      bool isFavorite = homeController
-                                                          .favoritesList
-                                                          .where((favorite) =>
-                                                              favorite["id"] ==
-                                                                  ProfileController
-                                                                      .userId
-                                                                      .value &&
-                                                              favorite[
-                                                                      "malId"] ==
-                                                                  animeSearchCard
-                                                                      .malId)
-                                                          .isNotEmpty;
-                                                      if (isFavorite) {
-                                                        homeController
-                                                            .deleteFavorites(
-                                                          ProfileController
-                                                              .userId.value,
-                                                          ProfileController
-                                                              .userName.value,
-                                                          animeSearchCard.malId,
-                                                        );
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .showSnackBar(
-                                                          const SnackBar(
-                                                            duration: Duration(
-                                                              seconds: 1,
-                                                            ),
-                                                            content: Text(
-                                                              "Berhasil dihapus dari daftar favorite!",
-                                                              style: TextStyle(
-                                                                fontSize: 16,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        );
                                                       } else {
-                                                        homeController
-                                                            .addFavorites(
-                                                          ProfileController
-                                                              .userId.value,
-                                                          ProfileController
-                                                              .userName.value,
-                                                          animeSearchCard.malId,
-                                                          animeSearchCard.title,
-                                                          animeSearchCard
-                                                              .imageUrl,
-                                                          animeSearchCard
-                                                              .airedFrom,
-                                                          animeSearchCard.type,
-                                                          animeSearchCard
-                                                              .rating,
-                                                          animeSearchCard.score,
-                                                          animeSearchCard
-                                                              .members,
-                                                          animeSearchCard
-                                                              .youtubeUrl,
-                                                        );
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .showSnackBar(
-                                                          const SnackBar(
-                                                            duration: Duration(
-                                                              seconds: 1,
-                                                            ),
-                                                            content: Text(
-                                                              "Berhasil menambahkan ke daftar favorite!",
-                                                              style: TextStyle(
-                                                                fontSize: 16,
+                                                        bool isFavorite = homeController
+                                                            .favoritesList
+                                                            .where((favorite) =>
+                                                                favorite[
+                                                                        "id"] ==
+                                                                    ProfileController
+                                                                        .userId
+                                                                        .value &&
+                                                                favorite[
+                                                                        "malId"] ==
+                                                                    animeSearchCard
+                                                                        .malId)
+                                                            .isNotEmpty;
+                                                        if (isFavorite) {
+                                                          homeController
+                                                              .deleteFavorites(
+                                                            ProfileController
+                                                                .userId.value,
+                                                            ProfileController
+                                                                .userName.value,
+                                                            animeSearchCard
+                                                                .malId,
+                                                          );
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                            const SnackBar(
+                                                              duration:
+                                                                  Duration(
+                                                                seconds: 1,
+                                                              ),
+                                                              content: Text(
+                                                                "Berhasil dihapus dari daftar favorite!",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 16,
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                        );
+                                                          );
+                                                        } else {
+                                                          homeController
+                                                              .addFavorites(
+                                                            ProfileController
+                                                                .userId.value,
+                                                            ProfileController
+                                                                .userName.value,
+                                                            animeSearchCard
+                                                                .malId,
+                                                            animeSearchCard
+                                                                .title,
+                                                            animeSearchCard
+                                                                .imageUrl,
+                                                            animeSearchCard
+                                                                .airedFrom,
+                                                            animeSearchCard
+                                                                .type,
+                                                            animeSearchCard
+                                                                .rating,
+                                                            animeSearchCard
+                                                                .score,
+                                                            animeSearchCard
+                                                                .members,
+                                                            animeSearchCard
+                                                                .youtubeUrl,
+                                                          );
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                            const SnackBar(
+                                                              duration:
+                                                                  Duration(
+                                                                seconds: 1,
+                                                              ),
+                                                              content: Text(
+                                                                "Berhasil menambahkan ke daftar favorite!",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 16,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }
                                                       }
                                                     },
                                                     child: Obx(() => Icon(

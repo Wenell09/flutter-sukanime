@@ -193,6 +193,11 @@ class AllTopAnimeView extends GetView<AllTopAnimeController> {
                                               ),
                                             ),
                                             InkWell(
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              splashColor: Colors.transparent,
                                               onTap: () {
                                                 if (ProfileController
                                                         .userId.value ==
@@ -219,76 +224,76 @@ class AllTopAnimeView extends GetView<AllTopAnimeController> {
                                                       ),
                                                     ),
                                                   );
-                                                }
-                                                bool isFavorite = homeController
-                                                    .favoritesList
-                                                    .where((favorite) =>
-                                                        favorite["id"] ==
-                                                            ProfileController
-                                                                .userId.value &&
-                                                        favorite["malId"] ==
-                                                            animeTopCard.malId)
-                                                    .isNotEmpty;
-                                                if (isFavorite) {
-                                                  homeController
-                                                      .deleteFavorites(
-                                                    ProfileController
-                                                        .userId.value,
-                                                    ProfileController
-                                                        .userName.value,
-                                                    animeTopCard.malId,
-                                                  );
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    const SnackBar(
-                                                      duration: Duration(
-                                                        seconds: 1,
-                                                      ),
-                                                      content: Text(
-                                                        "Berhasil dihapus dari daftar favorite!",
-                                                        style: TextStyle(
-                                                          fontSize: 16,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  );
                                                 } else {
-                                                  homeController.addFavorites(
-                                                    ProfileController
-                                                        .userId.value,
-                                                    ProfileController
-                                                        .userName.value,
-                                                    animeTopCard.malId,
-                                                    animeTopCard.title,
-                                                    animeTopCard.imageUrl,
-                                                    animeTopCard.airedFrom,
-                                                    animeTopCard.type,
-                                                    animeTopCard.rating,
-                                                    animeTopCard.score,
-                                                    animeTopCard.members,
-                                                    animeTopCard.youtubeUrl,
-                                                  );
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    const SnackBar(
-                                                      duration: Duration(
-                                                        seconds: 1,
-                                                      ),
-                                                      content: Text(
-                                                        "Berhasil menambahkan ke daftar favorite!",
-                                                        style: TextStyle(
-                                                          fontSize: 16,
+                                                  bool isFavorite = homeController
+                                                      .favoritesList
+                                                      .where((favorite) =>
+                                                          favorite["id"] ==
+                                                              ProfileController
+                                                                  .userId
+                                                                  .value &&
+                                                          favorite["malId"] ==
+                                                              animeTopCard
+                                                                  .malId)
+                                                      .isNotEmpty;
+                                                  if (isFavorite) {
+                                                    homeController
+                                                        .deleteFavorites(
+                                                      ProfileController
+                                                          .userId.value,
+                                                      ProfileController
+                                                          .userName.value,
+                                                      animeTopCard.malId,
+                                                    );
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      const SnackBar(
+                                                        duration: Duration(
+                                                          seconds: 1,
+                                                        ),
+                                                        content: Text(
+                                                          "Berhasil dihapus dari daftar favorite!",
+                                                          style: TextStyle(
+                                                            fontSize: 16,
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  );
+                                                    );
+                                                  } else {
+                                                    homeController.addFavorites(
+                                                      ProfileController
+                                                          .userId.value,
+                                                      ProfileController
+                                                          .userName.value,
+                                                      animeTopCard.malId,
+                                                      animeTopCard.title,
+                                                      animeTopCard.imageUrl,
+                                                      animeTopCard.airedFrom,
+                                                      animeTopCard.type,
+                                                      animeTopCard.rating,
+                                                      animeTopCard.score,
+                                                      animeTopCard.members,
+                                                      animeTopCard.youtubeUrl,
+                                                    );
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      const SnackBar(
+                                                        duration: Duration(
+                                                          seconds: 1,
+                                                        ),
+                                                        content: Text(
+                                                          "Berhasil menambahkan ke daftar favorite!",
+                                                          style: TextStyle(
+                                                            fontSize: 16,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
                                                 }
                                               },
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              splashColor: Colors.transparent,
                                               child: Flexible(
                                                 flex: 1,
                                                 child: Obx(() => Icon(
