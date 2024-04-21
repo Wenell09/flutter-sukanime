@@ -1,4 +1,3 @@
-import 'package:flutter_list_anime/app/modules/home/controllers/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -39,7 +38,6 @@ class LoginController extends GetxController {
           userDetail.photoURL ?? "",
         );
       }
-      Get.find<HomeController>().getFavorites(userDetail?.displayName ?? "");
       Get.back();
       return result;
     }
@@ -55,8 +53,5 @@ class LoginController extends GetxController {
 
     // Bersihkan data pengguna
     Get.find<ProfileController>().setUserDetails("", "", "", "");
-
-    // bersihkan data simpan akun
-    Get.find<HomeController>().favoritesList.value = [];
   }
 }

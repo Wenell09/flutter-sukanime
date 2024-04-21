@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_list_anime/app/modules/login/controllers/login_controller.dart';
 import 'package:flutter_list_anime/app/modules/widgets/nointernet_widget.dart';
 import 'package:flutter_list_anime/app/routes/app_pages.dart';
@@ -101,25 +103,31 @@ class ProfileView extends GetView<ProfileController> {
                           splashColor: Colors.transparent,
                           onTap: () =>
                               Navigator.pushNamed(context, Routes.FAVORITE),
-                          child: const ListTile(
-                            leading: Icon(
-                              Icons.bookmark,
-                              size: 30,
-                            ),
-                            title: Text(
-                              "Favorite's Anime",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            trailing: Icon(
-                              Icons.navigate_next_outlined,
-                              size: 30,
-                            ),
-                          ),
+                          child: (ProfileController.userName.value == "")
+                              ? Container()
+                              : const Column(
+                                  children: [
+                                    ListTile(
+                                      leading: Icon(
+                                        Icons.bookmark,
+                                        size: 30,
+                                      ),
+                                      title: Text(
+                                        "Favorite's Anime",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      trailing: Icon(
+                                        Icons.navigate_next_outlined,
+                                        size: 30,
+                                      ),
+                                    ),
+                                    Divider(),
+                                  ],
+                                ),
                         ),
-                        const Divider(),
                         (ProfileController.userName.value == "")
                             ? Container()
                             : Column(
@@ -238,6 +246,15 @@ class ProfileView extends GetView<ProfileController> {
                           ),
                         ),
                         const Divider(),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Text(
+                          "Versi Aplikasi : 1.0.0",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ],
                     ),
                     Positioned(
@@ -248,7 +265,7 @@ class ProfileView extends GetView<ProfileController> {
                           width: 125,
                           height: 125,
                           decoration: BoxDecoration(
-                            image: (controller.userImage.value == "")
+                            image: (ProfileController.userImage.value == "")
                                 ? const DecorationImage(
                                     image: AssetImage(
                                       "assets/profilePicture.png",
@@ -257,7 +274,7 @@ class ProfileView extends GetView<ProfileController> {
                                   )
                                 : DecorationImage(
                                     image: NetworkImage(
-                                      controller.userImage.value,
+                                      ProfileController.userImage.value,
                                     ),
                                     fit: BoxFit.cover,
                                   ),

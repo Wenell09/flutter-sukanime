@@ -1,11 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_list_anime/app/modules/detail/controllers/detail_controller.dart';
 import 'package:flutter_list_anime/app/modules/detail/widgets/card_detail.dart';
 import 'package:flutter_list_anime/app/modules/detail/widgets/isi_detail.dart';
+import 'package:flutter_list_anime/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter_list_anime/app/modules/profile/controllers/profile_controller.dart';
 import 'package:flutter_list_anime/app/modules/widgets/loading_widget.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:readmore/readmore.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -15,7 +18,13 @@ class DetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(DetailController());
     final darkMode = Get.put(ProfileController());
+    final homeController = Get.put(HomeController());
     final argument = Get.arguments;
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference reviews =
+        firestore.collection("reviews_${argument["title"]}");
+    CollectionReference favorites =
+        firestore.collection("favorites_${ProfileController.userName.value}");
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -76,13 +85,15 @@ class DetailView extends StatelessWidget {
                                   fontSize: 20,
                                 ),
                               ),
-                              Text(
-                                "${controller.formatMonth(argument["aired"])} • ${argument["type"]} • ${controller.cutString(argument["rating"])}",
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 15,
-                                ),
-                              ),
+                              (argument["aired"] == "")
+                                  ? Container()
+                                  : Text(
+                                      "${controller.formatMonth(argument["aired"])} • ${argument["type"]} • ${controller.cutString(argument["rating"])}",
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 15,
+                                      ),
+                                    ),
                               Text(
                                 "★ ${controller.convertScoreToRating(argument["score"])} Community Rating",
                                 style: const TextStyle(
@@ -96,6 +107,216 @@ class DetailView extends StatelessWidget {
                                   color: Colors.blue,
                                   fontSize: 15,
                                 ),
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              StreamBuilder<QuerySnapshot>(
+                                stream: favorites.snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return InkWell(
+                                      highlightColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      onTap: () {
+                                        if (ProfileController.userId.value ==
+                                            "") {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) => AlertDialog(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              content: const Text(
+                                                "Anda harus Login!",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          bool isFavorite = snapshot.data!.docs
+                                              .where((favorite) =>
+                                                  favorite["id"] ==
+                                                      ProfileController
+                                                          .userId.value &&
+                                                  favorite["malId"] ==
+                                                      argument["id"])
+                                              .isNotEmpty;
+                                          if (isFavorite) {
+                                            homeController.deleteFavorites(
+                                              ProfileController.userId.value,
+                                              ProfileController.userName.value,
+                                              argument["id"],
+                                            );
+                                            controller.isLoadingFavorite.value =
+                                                true;
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                duration: Duration(
+                                                  seconds: 1,
+                                                ),
+                                                content: Text(
+                                                  "Berhasil dihapus dari daftar favorite!",
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                            Future.delayed(
+                                                const Duration(seconds: 1), () {
+                                              controller.isLoadingFavorite
+                                                  .value = false;
+                                            });
+                                          } else {
+                                            homeController.addFavorites(
+                                              ProfileController.userId.value,
+                                              ProfileController.userName.value,
+                                              argument["id"],
+                                              argument["title"],
+                                              argument["image"],
+                                              argument["aired"],
+                                              argument["type"],
+                                              argument["rating"],
+                                              argument["score"],
+                                              argument["member"],
+                                              argument["youtube"],
+                                            );
+                                            controller.isLoadingFavorite.value =
+                                                true;
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                duration: Duration(
+                                                  seconds: 1,
+                                                ),
+                                                content: Text(
+                                                  "Berhasil menambahkan ke daftar favorite!",
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                            Future.delayed(
+                                                const Duration(seconds: 1), () {
+                                              controller.isLoadingFavorite
+                                                  .value = false;
+                                            });
+                                          }
+                                        }
+                                      },
+                                      child: Obx(
+                                        () => AnimatedContainer(
+                                          curve: Curves.easeInOut,
+                                          duration: const Duration(seconds: 1),
+                                          width: (controller
+                                                  .isLoadingFavorite.value)
+                                              ? 33
+                                              : MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.5,
+                                          height: 35,
+                                          decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              const Flexible(
+                                                flex: 1,
+                                                child: SizedBox(
+                                                  width: 8,
+                                                ),
+                                              ),
+                                              (controller
+                                                      .isLoadingFavorite.value)
+                                                  ? SizedBox(
+                                                      width: 25,
+                                                      height: 25,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        backgroundColor:
+                                                            Colors.blue,
+                                                        color: (darkMode
+                                                                .isDark.value)
+                                                            ? Colors.white
+                                                            : Colors.black,
+                                                      ),
+                                                    )
+                                                  : Icon(
+                                                      (snapshot.data!.docs
+                                                              .where((favorite) =>
+                                                                  favorite[
+                                                                          "id"] ==
+                                                                      ProfileController
+                                                                          .userId
+                                                                          .value &&
+                                                                  favorite[
+                                                                          "malId"] ==
+                                                                      argument[
+                                                                          "id"])
+                                                              .isNotEmpty)
+                                                          ? Icons.check_outlined
+                                                          : Icons.bookmark,
+                                                      size: 25,
+                                                    ),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              Expanded(
+                                                flex: 5,
+                                                child: Text(
+                                                  (controller.isLoadingFavorite
+                                                          .value)
+                                                      ? ""
+                                                      : (snapshot.data!.docs
+                                                              .where((favorite) =>
+                                                                  favorite[
+                                                                          "id"] ==
+                                                                      ProfileController
+                                                                          .userId
+                                                                          .value &&
+                                                                  favorite[
+                                                                          "malId"] ==
+                                                                      argument[
+                                                                          "id"])
+                                                              .isNotEmpty)
+                                                          ? "Berhasil ditambah"
+                                                          : "Tambahkan Favorit",
+                                                  style: const TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    return Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.5,
+                                      height: 35,
+                                      decoration: BoxDecoration(
+                                        color: Colors.blue,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    );
+                                  }
+                                },
                               ),
                             ],
                           ),
@@ -287,11 +508,16 @@ class DetailView extends StatelessWidget {
                                                   title: "Status • ",
                                                   isi: detailAnime.status,
                                                 ),
-                                                IsiDetail(
-                                                  title: "Aired Date(s) • ",
-                                                  isi: controller.formatDate(
-                                                      detailAnime.airedFrom),
-                                                ),
+                                                (detailAnime.airedFrom.isEmpty)
+                                                    ? Container()
+                                                    : IsiDetail(
+                                                        title:
+                                                            "Aired Date(s) • ",
+                                                        isi: controller
+                                                            .formatDate(
+                                                                detailAnime
+                                                                    .airedFrom),
+                                                      ),
                                                 (detailAnime.airedTo.isEmpty)
                                                     ? Container()
                                                     : IsiDetail(
@@ -302,12 +528,15 @@ class DetailView extends StatelessWidget {
                                                                 detailAnime
                                                                     .airedTo),
                                                       ),
-                                                IsiDetail(
-                                                  title: "Studio • ",
-                                                  isi: detailAnime.studios[0]
-                                                          ["name"] ??
-                                                      "",
-                                                ),
+                                                (detailAnime.studios.isEmpty)
+                                                    ? Container()
+                                                    : IsiDetail(
+                                                        title: "Studio • ",
+                                                        isi: detailAnime
+                                                                    .studios[0]
+                                                                ["name"] ??
+                                                            "",
+                                                      ),
                                                 (detailAnime
                                                         .demographics.isEmpty)
                                                     ? IsiDetail(
@@ -389,7 +618,163 @@ class DetailView extends StatelessWidget {
                 ),
               ],
             ),
-            const Text("INI FITUR REVIEWS BELUM JADI!!"),
+            Column(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: reviews.orderBy("timestamp").snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        if (snapshot.data!.docs.isNotEmpty) {
+                          return ListView(
+                            children: snapshot.data!.docs.map((data) {
+                              Timestamp? timestamp =
+                                  data["timestamp"] as Timestamp?;
+                              String formattedTime =
+                                  DateFormat('yyyy-MM-dd HH:mm').format(
+                                      timestamp?.toDate() ?? DateTime.now());
+                              return ListTile(
+                                leading: CircleAvatar(
+                                  backgroundImage:
+                                      NetworkImage(data["profilePicture"]),
+                                ),
+                                title: Text(data["username"]),
+                                subtitle: Text(data["isiReview"]),
+                                trailing: Text(formattedTime),
+                              );
+                            }).toList(),
+                          );
+                        } else {
+                          return const Center(
+                            child: Text(
+                              "Belum ada review tentang Anime ini",
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                          );
+                        }
+                      } else {
+                        return Container();
+                      }
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Stack(
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          alignment: Alignment.bottomCenter,
+                          margin: const EdgeInsets.only(left: 10, bottom: 15),
+                          padding: const EdgeInsets.only(left: 10),
+                          width: MediaQuery.of(context).size.width * 0.75,
+                          height: 45,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: (darkMode.isDark.value)
+                                ? Colors.grey[600]
+                                : Colors.grey[350],
+                          ),
+                          child: TextField(
+                            cursorColor: Colors.white,
+                            controller: controller.inputReview,
+                            style: TextStyle(
+                              color: (darkMode.isDark.value)
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: "Berikan review tentang Anime ini",
+                              hintStyle: TextStyle(
+                                color: (darkMode.isDark.value)
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
+                              border: InputBorder.none,
+                              fillColor: (darkMode.isDark.value)
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: InkWell(
+                            highlightColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            onTap: () {
+                              if (ProfileController.userId.value == "") {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    content: const Text(
+                                      "Anda harus Login!",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                );
+                              } else if (controller.inputReview.text.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    duration: Duration(
+                                      seconds: 1,
+                                    ),
+                                    content: Text(
+                                      "Review tidak boleh kosong!",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                controller.addReview(
+                                  argument["id"],
+                                  argument["title"],
+                                  ProfileController.userImage.value,
+                                  ProfileController.userName.value,
+                                  controller.inputReview.text,
+                                );
+                              }
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(
+                                left: 10,
+                                right: 10,
+                                bottom: 15,
+                              ),
+                              height: 45,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.blue,
+                              ),
+                              child: const Center(
+                                child: FaIcon(
+                                  FontAwesomeIcons.chevronRight,
+                                  size: 28,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ],
         ),
       ),

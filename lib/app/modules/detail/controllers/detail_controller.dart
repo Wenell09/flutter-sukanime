@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_list_anime/app/data/base/base_url.dart';
 import 'package:flutter_list_anime/app/data/models/anime_model.dart';
@@ -10,8 +11,11 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class DetailController extends GetxController {
   var isLoading = true.obs;
+  var isLoadingFavorite = false.obs;
   var detailAnime = <AnimeModel>[].obs;
+  var inputReview = TextEditingController();
   late YoutubePlayerController youtubeController;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<void> fetchDetailAnime(int id) async {
     try {
@@ -28,6 +32,25 @@ class DetailController extends GetxController {
     } catch (e) {
       debugPrint("Gagal fetch : $e");
     }
+  }
+
+  Future<void> addReview(
+    int malId,
+    String title,
+    String profilePicture,
+    String username,
+    String isiReview,
+  ) async {
+    CollectionReference reviews = firestore.collection("reviews_$title");
+    reviews.add({
+      "malId": malId,
+      "title": title,
+      "username": username,
+      "profilePicture": profilePicture,
+      "isiReview": isiReview,
+      "timestamp": FieldValue.serverTimestamp(),
+    });
+    inputReview.text = "";
   }
 
   String formatDate(String dateString) {

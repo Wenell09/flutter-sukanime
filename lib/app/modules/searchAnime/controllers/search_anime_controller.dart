@@ -37,6 +37,13 @@ class SearchAnimeController extends GetxController {
     }
   }
 
+  void resetInput() {
+    cariAnime.clear();
+    cardSearchAnime.clear();
+    isLoading.value = true;
+    isHide.value = true;
+  }
+
   Future<void> getConnectivityType() async {
     late ConnectivityResult connectivityResult;
     try {
@@ -64,13 +71,6 @@ class SearchAnimeController extends GetxController {
         Get.snackbar("Error", "Failed to get connection type");
         break;
     }
-  }
-
-  void resetInput() {
-    cariAnime.clear();
-    cardSearchAnime.clear();
-    isLoading.value = true;
-    isHide.value = true;
   }
 
   @override

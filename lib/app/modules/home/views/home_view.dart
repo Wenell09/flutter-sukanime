@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_list_anime/app/modules/profile/controllers/profile_controller.dart';
 import 'package:flutter_list_anime/app/routes/app_pages.dart';
+import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 import '../../widgets/loading_widget.dart';
@@ -31,434 +32,607 @@ class HomeView extends GetView<HomeController> {
                   ? LoadingWidget(
                       color:
                           (profile.isDark.value) ? Colors.white : Colors.black,
-                      text: "Memuat list Anime....",
+                      text: "Mohon Tunggu....",
                       mediaQuery: MediaQuery.of(context).size.height * 0.9,
                     )
                   : Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                "Top Anime",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 25,
-                                ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        ExpandableCarousel.builder(
+                            options: CarouselOptions(
+                              floatingIndicator: true,
+                              autoPlay: true,
+                              showIndicator: true,
+                              slideIndicator: CircularSlideIndicator(
+                                indicatorRadius: 5,
+                                indicatorBackgroundColor: (profile.isDark.value)
+                                    ? Colors.black
+                                    : Colors.white,
+                                currentIndicatorColor: Colors.blue,
                               ),
-                              InkWell(
+                            ),
+                            itemCount: controller.animeImageCard.length,
+                            itemBuilder: (context, index, pageViewIndex) {
+                              var animeImageCard =
+                                  controller.animeImageCard[index];
+                              return Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 5.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Image.network(
+                                    animeImageCard.imageUrlBig,
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 220,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              );
+                            }),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const TitleText(
+                          title: "Top All Anime",
+                          argumentKey: "top_all",
+                          argumentField: "Top All Anime",
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 280,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.all(8.0),
+                            itemBuilder: (context, index) {
+                              var animeTopCard = controller.animeTopCard[index];
+                              return InkWell(
                                 highlightColor: Colors.transparent,
                                 hoverColor: Colors.transparent,
                                 focusColor: Colors.transparent,
                                 splashColor: Colors.transparent,
                                 onTap: () => Navigator.pushNamed(
                                   context,
-                                  Routes.ALL_TOP_ANIME,
+                                  Routes.DETAIL,
+                                  arguments: {
+                                    "id": animeTopCard.malId,
+                                    "image": animeTopCard.imageUrl,
+                                    "title": animeTopCard.title,
+                                    "aired": animeTopCard.airedFrom,
+                                    "type": animeTopCard.type,
+                                    "rating": animeTopCard.rating,
+                                    "score": animeTopCard.score,
+                                    "member": animeTopCard.members,
+                                    "youtube": animeTopCard.youtubeUrl,
+                                  },
                                 ),
-                                child: const Text(
-                                  "Lihat Lainnya",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    decoration: TextDecoration.underline,
-                                    color: Colors.blue,
-                                    decorationColor: Colors.blue,
+                                child: Card(
+                                  elevation: 5,
+                                  shadowColor: Colors.black,
+                                  child: SizedBox(
+                                    width: 160,
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          flex: 5,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            child: Image.network(
+                                              animeTopCard.imageUrl,
+                                              fit: BoxFit.cover,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Center(
+                                            child: Text(
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              animeTopCard.title,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              );
+                            },
+                            itemCount: controller.animeTopCard.length,
                           ),
-                        ),
-                        GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 15,
-                            crossAxisSpacing: 15,
-                            childAspectRatio: 1.5 / 2.3,
-                          ),
-                          padding: const EdgeInsets.all(8.0),
-                          itemBuilder: (context, index) {
-                            var animeTopCard = controller.animeTopCard[index];
-                            return InkWell(
-                              highlightColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              onTap: () => Navigator.pushNamed(
-                                context,
-                                Routes.DETAIL,
-                                arguments: {
-                                  "id": animeTopCard.malId,
-                                  "image": animeTopCard.imageUrl,
-                                  "title": animeTopCard.title,
-                                  "aired": animeTopCard.airedFrom,
-                                  "type": animeTopCard.type,
-                                  "rating": animeTopCard.rating,
-                                  "score": animeTopCard.score,
-                                  "member": animeTopCard.members,
-                                  "youtube": animeTopCard.youtubeUrl,
-                                },
-                              ),
-                              child: Card(
-                                elevation: 5,
-                                shadowColor: Colors.black,
-                                child: Column(
-                                  children: [
-                                    Expanded(
-                                      flex: 3,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image.network(
-                                          animeTopCard.imageUrl,
-                                          fit: BoxFit.cover,
-                                          height: MediaQuery.of(context)
-                                              .size
-                                              .height,
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Flexible(
-                                              flex: 1,
-                                              child: Text(
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                                animeTopCard.title,
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15,
-                                                ),
-                                              ),
-                                            ),
-                                            Flexible(
-                                              flex: 1,
-                                              child: InkWell(
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                splashColor: Colors.transparent,
-                                                onTap: () {
-                                                  if (ProfileController
-                                                          .userId.value ==
-                                                      "") {
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (context) =>
-                                                          AlertDialog(
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                        ),
-                                                        content: const Text(
-                                                          "Anda harus Login!",
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                              fontSize: 18,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                      ),
-                                                    );
-                                                  } else {
-                                                    bool isFavorite = controller
-                                                        .favoritesList
-                                                        .where((favorite) =>
-                                                            favorite["id"] ==
-                                                                ProfileController
-                                                                    .userId
-                                                                    .value &&
-                                                            favorite["malId"] ==
-                                                                animeTopCard
-                                                                    .malId)
-                                                        .isNotEmpty;
-                                                    if (isFavorite) {
-                                                      controller
-                                                          .deleteFavorites(
-                                                        ProfileController
-                                                            .userId.value,
-                                                        ProfileController
-                                                            .userName.value,
-                                                        animeTopCard.malId,
-                                                      );
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                        const SnackBar(
-                                                          duration: Duration(
-                                                            seconds: 1,
-                                                          ),
-                                                          content: Text(
-                                                            "Berhasil dihapus dari daftar favorite!",
-                                                            style: TextStyle(
-                                                              fontSize: 16,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    } else {
-                                                      controller.addFavorites(
-                                                        ProfileController
-                                                            .userId.value,
-                                                        ProfileController
-                                                            .userName.value,
-                                                        animeTopCard.malId,
-                                                        animeTopCard.title,
-                                                        animeTopCard.imageUrl,
-                                                        animeTopCard.airedFrom,
-                                                        animeTopCard.type,
-                                                        animeTopCard.rating,
-                                                        animeTopCard.score,
-                                                        animeTopCard.members,
-                                                        animeTopCard.youtubeUrl,
-                                                      );
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                        const SnackBar(
-                                                          duration: Duration(
-                                                            seconds: 1,
-                                                          ),
-                                                          content: Text(
-                                                            "Berhasil menambahkan ke daftar favorite!",
-                                                            style: TextStyle(
-                                                              fontSize: 16,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }
-                                                  }
-                                                },
-                                                child: Obx(() => Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                        right: 5,
-                                                      ),
-                                                      child: Icon(
-                                                        (controller
-                                                                .favoritesList
-                                                                .where((favorite) =>
-                                                                    favorite[
-                                                                            "id"] ==
-                                                                        ProfileController
-                                                                            .userId
-                                                                            .value &&
-                                                                    favorite[
-                                                                            "malId"] ==
-                                                                        animeTopCard
-                                                                            .malId)
-                                                                .isNotEmpty)
-                                                            ? Icons.bookmark
-                                                            : Icons
-                                                                .bookmark_border_outlined,
-                                                        color: Colors.blue,
-                                                        size: 30,
-                                                      ),
-                                                    )),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                          itemCount: controller.animeTopCard.length,
                         ),
                         const SizedBox(
-                          height: 35,
+                          height: 5,
                         ),
-                        const Padding(
-                          padding: EdgeInsets.all(20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Recommendation",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 25,
+                        const TitleText(
+                          title: "Top Airing",
+                          argumentKey: "airing",
+                          argumentField: "Top Airing",
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 280,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.all(8.0),
+                            itemBuilder: (context, index) {
+                              var animeRecomCard =
+                                  controller.animeAiringCard[index];
+                              return InkWell(
+                                highlightColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onTap: () => Navigator.pushNamed(
+                                  context,
+                                  Routes.DETAIL,
+                                  arguments: {
+                                    "id": animeRecomCard.malId,
+                                    "image": animeRecomCard.imageUrl,
+                                    "title": animeRecomCard.title,
+                                    "aired": animeRecomCard.airedFrom,
+                                    "type": animeRecomCard.type,
+                                    "rating": animeRecomCard.rating,
+                                    "score": animeRecomCard.score,
+                                    "member": animeRecomCard.members,
+                                    "youtube": animeRecomCard.youtubeUrl,
+                                  },
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 15,
-                            crossAxisSpacing: 15,
-                            childAspectRatio: 1.5 / 2.3,
-                          ),
-                          padding: const EdgeInsets.all(8.0),
-                          itemBuilder: (context, index) {
-                            var animeRecomCard =
-                                controller.animeRecomendCard[index];
-                            return InkWell(
-                              highlightColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              onTap: () => Navigator.pushNamed(
-                                context,
-                                Routes.DETAIL,
-                                arguments: {
-                                  "id": animeRecomCard.malId,
-                                  "image": animeRecomCard.imageUrl,
-                                  "title": animeRecomCard.title,
-                                  "aired": animeRecomCard.airedFrom,
-                                  "type": animeRecomCard.type,
-                                  "rating": animeRecomCard.rating,
-                                  "score": animeRecomCard.score,
-                                  "member": animeRecomCard.members,
-                                  "youtube": animeRecomCard.youtubeUrl,
-                                },
-                              ),
-                              child: Card(
-                                elevation: 5,
-                                shadowColor: Colors.black,
-                                child: Column(
-                                  children: [
-                                    Expanded(
-                                      flex: 3,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image.network(
-                                          animeRecomCard.imageUrl,
-                                          fit: BoxFit.cover,
-                                          height: MediaQuery.of(context)
-                                              .size
-                                              .height,
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Flexible(
-                                              flex: 1,
-                                              child: Text(
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                                animeRecomCard.title,
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15,
-                                                ),
-                                              ),
+                                child: Card(
+                                  elevation: 5,
+                                  shadowColor: Colors.black,
+                                  child: SizedBox(
+                                    width: 160,
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          flex: 5,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            child: Image.network(
+                                              animeRecomCard.imageUrl,
+                                              fit: BoxFit.cover,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
                                             ),
-                                            Flexible(
-                                              flex: 1,
-                                              child: InkWell(
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                splashColor: Colors.transparent,
-                                                onTap: () {
-                                                  bool isFavorite = controller
-                                                      .favoritesList
-                                                      .where((favorite) =>
-                                                          favorite["id"] ==
-                                                              ProfileController
-                                                                  .userId
-                                                                  .value &&
-                                                          favorite["malId"] ==
-                                                              animeRecomCard
-                                                                  .malId)
-                                                      .isNotEmpty;
-                                                  if (isFavorite) {
-                                                    controller.deleteFavorites(
-                                                      ProfileController
-                                                          .userId.value,
-                                                      ProfileController
-                                                          .userName.value,
-                                                      animeRecomCard.malId,
-                                                    );
-                                                  } else {
-                                                    controller.addFavorites(
-                                                      ProfileController
-                                                          .userId.value,
-                                                      ProfileController
-                                                          .userName.value,
-                                                      animeRecomCard.malId,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Center(
+                                                    child: Text(
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                       animeRecomCard.title,
-                                                      animeRecomCard.imageUrl,
-                                                      animeRecomCard.airedFrom,
-                                                      animeRecomCard.type,
-                                                      animeRecomCard.rating,
-                                                      animeRecomCard.score,
-                                                      animeRecomCard.members,
-                                                      animeRecomCard.youtubeUrl,
-                                                    );
-                                                  }
-                                                },
-                                                child: Obx(() => Icon(
-                                                      (controller.favoritesList
-                                                              .where((favorite) =>
-                                                                  favorite[
-                                                                          "id"] ==
-                                                                      ProfileController
-                                                                          .userId
-                                                                          .value &&
-                                                                  favorite[
-                                                                          "malId"] ==
-                                                                      animeRecomCard
-                                                                          .malId)
-                                                              .isNotEmpty)
-                                                          ? Icons.bookmark
-                                                          : Icons
-                                                              .bookmark_border_outlined,
-                                                      color: Colors.blue,
-                                                      size: 30,
-                                                    )),
+                                                      style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                            itemCount: controller.animeAiringCard.length,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const TitleText(
+                          title: "Top Upcoming",
+                          argumentKey: "upcoming",
+                          argumentField: "Top Upcoming",
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 280,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.all(8.0),
+                            itemBuilder: (context, index) {
+                              var animeUpcomingCard =
+                                  controller.animeUpcomingCard[index];
+                              return InkWell(
+                                highlightColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onTap: () => Navigator.pushNamed(
+                                  context,
+                                  Routes.DETAIL,
+                                  arguments: {
+                                    "id": animeUpcomingCard.malId,
+                                    "image": animeUpcomingCard.imageUrl,
+                                    "title": animeUpcomingCard.title,
+                                    "aired": animeUpcomingCard.airedFrom,
+                                    "type": animeUpcomingCard.type,
+                                    "rating": animeUpcomingCard.rating,
+                                    "score": animeUpcomingCard.score,
+                                    "member": animeUpcomingCard.members,
+                                    "youtube": animeUpcomingCard.youtubeUrl,
+                                  },
+                                ),
+                                child: Card(
+                                  elevation: 5,
+                                  shadowColor: Colors.black,
+                                  child: SizedBox(
+                                    width: 160,
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          flex: 5,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            child: Image.network(
+                                              animeUpcomingCard.imageUrl,
+                                              fit: BoxFit.cover,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Center(
+                                            child: Text(
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              animeUpcomingCard.title,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                          itemCount: controller.animeRecomendCard.length,
+                              );
+                            },
+                            itemCount: controller.animeUpcomingCard.length,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const TitleText(
+                          title: "Top Movie",
+                          argumentKey: "movie",
+                          argumentField: "Top Movie",
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 280,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.all(8.0),
+                            itemBuilder: (context, index) {
+                              var animeMovieCard =
+                                  controller.animeMovieCard[index];
+                              return InkWell(
+                                highlightColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onTap: () => Navigator.pushNamed(
+                                  context,
+                                  Routes.DETAIL,
+                                  arguments: {
+                                    "id": animeMovieCard.malId,
+                                    "image": animeMovieCard.imageUrl,
+                                    "title": animeMovieCard.title,
+                                    "aired": animeMovieCard.airedFrom,
+                                    "type": animeMovieCard.type,
+                                    "rating": animeMovieCard.rating,
+                                    "score": animeMovieCard.score,
+                                    "member": animeMovieCard.members,
+                                    "youtube": animeMovieCard.youtubeUrl,
+                                  },
+                                ),
+                                child: Card(
+                                  elevation: 5,
+                                  shadowColor: Colors.black,
+                                  child: SizedBox(
+                                    width: 160,
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          flex: 5,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            child: Image.network(
+                                              animeMovieCard.imageUrl,
+                                              fit: BoxFit.cover,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Center(
+                                            child: Text(
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              animeMovieCard.title,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                            itemCount: controller.animeMovieCard.length,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const TitleText(
+                          title: "Most Popular",
+                          argumentKey: "bypopularity",
+                          argumentField: "Most Popular",
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 280,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.all(8.0),
+                            itemBuilder: (context, index) {
+                              var animePopularCard =
+                                  controller.animePopularCard[index];
+                              return InkWell(
+                                highlightColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onTap: () => Navigator.pushNamed(
+                                  context,
+                                  Routes.DETAIL,
+                                  arguments: {
+                                    "id": animePopularCard.malId,
+                                    "image": animePopularCard.imageUrl,
+                                    "title": animePopularCard.title,
+                                    "aired": animePopularCard.airedFrom,
+                                    "type": animePopularCard.type,
+                                    "rating": animePopularCard.rating,
+                                    "score": animePopularCard.score,
+                                    "member": animePopularCard.members,
+                                    "youtube": animePopularCard.youtubeUrl,
+                                  },
+                                ),
+                                child: Card(
+                                  elevation: 5,
+                                  shadowColor: Colors.black,
+                                  child: SizedBox(
+                                    width: 160,
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          flex: 5,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            child: Image.network(
+                                              animePopularCard.imageUrl,
+                                              fit: BoxFit.cover,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Center(
+                                            child: Text(
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              animePopularCard.title,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                            itemCount: controller.animePopularCard.length,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const TitleText(
+                          title: "Most Favorited",
+                          argumentKey: "favorite",
+                          argumentField: "Most Favorited",
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 280,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.all(8.0),
+                            itemBuilder: (context, index) {
+                              var animeFavoriteCard =
+                                  controller.animeFavoriteCard[index];
+                              return InkWell(
+                                highlightColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onTap: () => Navigator.pushNamed(
+                                  context,
+                                  Routes.DETAIL,
+                                  arguments: {
+                                    "id": animeFavoriteCard.malId,
+                                    "image": animeFavoriteCard.imageUrl,
+                                    "title": animeFavoriteCard.title,
+                                    "aired": animeFavoriteCard.airedFrom,
+                                    "type": animeFavoriteCard.type,
+                                    "rating": animeFavoriteCard.rating,
+                                    "score": animeFavoriteCard.score,
+                                    "member": animeFavoriteCard.members,
+                                    "youtube": animeFavoriteCard.youtubeUrl,
+                                  },
+                                ),
+                                child: Card(
+                                  elevation: 5,
+                                  shadowColor: Colors.black,
+                                  child: SizedBox(
+                                    width: 160,
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          flex: 5,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            child: Image.network(
+                                              animeFavoriteCard.imageUrl,
+                                              fit: BoxFit.cover,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Center(
+                                            child: Text(
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              animeFavoriteCard.title,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                            itemCount: controller.animeFavoriteCard.length,
+                          ),
                         ),
                       ],
                     ),
         ),
+      ),
+    );
+  }
+}
+
+class TitleText extends StatelessWidget {
+  final String title;
+  final String argumentKey;
+  final String argumentField;
+  const TitleText({
+    super.key,
+    required this.title,
+    required this.argumentKey,
+    required this.argumentField,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 25,
+            ),
+          ),
+          InkWell(
+            highlightColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            onTap: () => Navigator.pushNamed(
+              context,
+              Routes.ALL_TOP_ANIME,
+              arguments: {
+                argumentKey: argumentField,
+              },
+            ),
+            child: const Text(
+              "Lihat Lainnya",
+              style: TextStyle(
+                fontSize: 15,
+                decoration: TextDecoration.underline,
+                color: Colors.blue,
+                decorationColor: Colors.blue,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

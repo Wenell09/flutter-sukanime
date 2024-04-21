@@ -2,6 +2,7 @@ class AnimeModel {
   late int malId;
   late String url;
   late String imageUrl;
+  late String imageUrlBig;
   late String title;
   late String youtubeId;
   late String youtubeUrl;
@@ -32,6 +33,7 @@ class AnimeModel {
     required this.malId,
     required this.url,
     required this.imageUrl,
+    required this.imageUrlBig,
     required this.title,
     required this.youtubeId,
     required this.youtubeUrl,
@@ -63,6 +65,7 @@ class AnimeModel {
       malId: json["mal_id"] ?? 0,
       url: json["url"] ?? "",
       imageUrl: json["images"]["jpg"]["image_url"] ?? "",
+      imageUrlBig: json["images"]["jpg"]["large_image_url"] ?? "",
       title: json["title"] ?? "",
       youtubeId: json["trailer"]["youtube_id"] ?? "",
       youtubeUrl: json["trailer"]["url"] ?? "",

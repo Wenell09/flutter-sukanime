@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_list_anime/app/data/base/base_url.dart';
 import 'package:flutter_list_anime/app/data/models/anime_model.dart';
-import 'package:flutter_list_anime/app/modules/profile/controllers/profile_controller.dart';
 import 'package:get/get.dart';
 import "package:http/http.dart" as http;
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -13,33 +12,89 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 class HomeController extends GetxController {
   var isLoading = true.obs;
   var animeTopCard = <AnimeModel>[].obs;
-  var animeRecomendCard = <AnimeModel>[].obs;
-  RxList<Map<String, dynamic>> favoritesList = RxList<Map<String, dynamic>>();
+  var animeAiringCard = <AnimeModel>[].obs;
+  var animeUpcomingCard = <AnimeModel>[].obs;
+  var animePopularCard = <AnimeModel>[].obs;
+  var animeMovieCard = <AnimeModel>[].obs;
+  var animeFavoriteCard = <AnimeModel>[].obs;
+  var animeImageCard = <AnimeModel>[].obs;
   var connectionType = 0.obs;
   late StreamSubscription streamSubscription;
   final Connectivity connectivity = Connectivity();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future<void> fetchTopAnime() async {
-    try {
-      var response = await http.get(Uri.parse("$baseUrl/top/anime?limit=6"));
-      if (response.statusCode == 200) {
-        final List result = jsonDecode(response.body)["data"];
-        animeTopCard.value = result.map((e) => AnimeModel.fromJson(e)).toList();
-        isLoading.value = false;
+  Future<void> fetchAnime(String filter) async {
+    if (filter == "airing") {
+      try {
+        var response = await http.get(
+            Uri.parse("$baseUrl/top/anime?&limit=25&filter=$filter&sfw=true"));
+        if (response.statusCode == 200) {
+          final List result = jsonDecode(response.body)["data"];
+          animeAiringCard.value =
+              result.map((e) => AnimeModel.fromJson(e)).toList();
+        }
+      } catch (e) {
+        debugPrint("Gagal fetch $e");
       }
-    } catch (e) {
-      debugPrint("Gagal fetch $e");
+    } else if (filter == "upcoming") {
+      try {
+        var response = await http.get(
+            Uri.parse("$baseUrl/top/anime?limit=25&filter=$filter&sfw=true"));
+        if (response.statusCode == 200) {
+          final List result = jsonDecode(response.body)["data"];
+          animeUpcomingCard.value =
+              result.map((e) => AnimeModel.fromJson(e)).toList();
+        }
+      } catch (e) {
+        debugPrint("Gagal fetch$e");
+      }
+    } else if (filter == "bypopularity") {
+      try {
+        var response = await http.get(
+            Uri.parse("$baseUrl/top/anime?limit=25&filter=$filter&sfw=true"));
+        if (response.statusCode == 200) {
+          final List result = jsonDecode(response.body)["data"];
+          animePopularCard.value =
+              result.map((e) => AnimeModel.fromJson(e)).toList();
+        }
+      } catch (e) {
+        debugPrint("Gagal fetch$e");
+      }
+    } else if (filter == "favorite") {
+      try {
+        var response = await http.get(
+            Uri.parse("$baseUrl/top/anime?limit=25&filter=$filter&sfw=true"));
+        if (response.statusCode == 200) {
+          final List result = jsonDecode(response.body)["data"];
+          animeFavoriteCard.value =
+              result.map((e) => AnimeModel.fromJson(e)).toList();
+        }
+      } catch (e) {
+        debugPrint("Gagal fetch$e");
+      }
+    } else if (filter == "") {
+      try {
+        var response =
+            await http.get(Uri.parse("$baseUrl/top/anime?limit=25&sfw=true"));
+        if (response.statusCode == 200) {
+          final List result = jsonDecode(response.body)["data"];
+          animeTopCard.value =
+              result.map((e) => AnimeModel.fromJson(e)).toList();
+          isLoading.value = false;
+        }
+      } catch (e) {
+        debugPrint("Gagal fetch $e");
+      }
     }
   }
 
-  Future<void> fetchRecomAnime() async {
+  Future<void> fetchAnimeMovie() async {
     try {
-      var response = await http.get(Uri.parse(
-          "$baseUrl/top/anime?rating=r17&limit=25&filter=bypopularity"));
+      var response =
+          await http.get(Uri.parse("$baseUrl/top/anime?type=movie&limit=25"));
       if (response.statusCode == 200) {
         final List result = jsonDecode(response.body)["data"];
-        animeRecomendCard.value =
+        animeMovieCard.value =
             result.map((e) => AnimeModel.fromJson(e)).toList();
       }
     } catch (e) {
@@ -47,7 +102,20 @@ class HomeController extends GetxController {
     }
   }
 
-  void addFavorites(
+  Future<void> fetchImage() async {
+    try {
+      var response = await http.get(Uri.parse("$baseUrl/top/anime?limit=5"));
+      if (response.statusCode == 200) {
+        final List result = jsonDecode(response.body)["data"];
+        animeImageCard.value =
+            result.map((e) => AnimeModel.fromJson(e)).toList();
+      }
+    } catch (e) {
+      debugPrint("Gagal fetch $e");
+    }
+  }
+
+  Future<void> addFavorites(
     String id,
     String username,
     int malId,
@@ -75,10 +143,10 @@ class HomeController extends GetxController {
       "youtubeUrl": youtubeUrl,
       "createdAt": FieldValue.serverTimestamp(),
     });
-    getFavorites(username);
+    // getFavorites(username);
   }
 
-  void deleteFavorites(String id, String username, int malId) async {
+  Future<void> deleteFavorites(String id, String username, int malId) async {
     QuerySnapshot favoritesSnapshot = await firestore
         .collection("favorites_$username")
         .where("id", isEqualTo: id)
@@ -89,18 +157,6 @@ class HomeController extends GetxController {
     for (QueryDocumentSnapshot doc in favoritesSnapshot.docs) {
       doc.reference.delete();
     }
-    getFavorites(username);
-  }
-
-  Future<void> getFavorites(String username) async {
-    QuerySnapshot favoritesSnapshot = await FirebaseFirestore.instance
-        .collection("favorites_$username")
-        .get();
-    favoritesList.assignAll(
-      favoritesSnapshot.docs
-          .map((doc) => doc.data() as Map<String, dynamic>)
-          .toList(),
-    );
   }
 
   Future<void> getConnectivityType() async {
@@ -119,16 +175,26 @@ class HomeController extends GetxController {
     switch (result) {
       case ConnectivityResult.wifi:
         connectionType.value = 1;
-        if (animeTopCard.isEmpty || animeRecomendCard.isEmpty) {
-          await fetchTopAnime();
-          await fetchRecomAnime();
+        if (animeTopCard.isEmpty) {
+          await fetchImage();
+          await fetchAnimeMovie();
+          await fetchAnime("");
+          await fetchAnime("airing");
+          await fetchAnime("upcoming");
+          await fetchAnime("bypopularity");
+          await fetchAnime("favorite");
         }
         break;
       case ConnectivityResult.mobile:
         connectionType.value = 2;
-        if (animeTopCard.isEmpty || animeRecomendCard.isEmpty) {
-          await fetchTopAnime();
-          await fetchRecomAnime();
+        if (animeTopCard.isEmpty) {
+          await fetchImage();
+          await fetchAnimeMovie();
+          await fetchAnime("");
+          await fetchAnime("airing");
+          await fetchAnime("upcoming");
+          await fetchAnime("bypopularity");
+          await fetchAnime("favorite");
         }
         break;
       case ConnectivityResult.none:
@@ -145,9 +211,14 @@ class HomeController extends GetxController {
     streamSubscription = connectivity.onConnectivityChanged.listen(updateState);
     await getConnectivityType();
     if (connectionType.value != 0) {
-      await fetchTopAnime();
-      await fetchRecomAnime();
-      await getFavorites(ProfileController.userName.value);
+      await fetchImage();
+      await fetchAnimeMovie();
+      await fetchAnime("");
+      await fetchAnime("airing");
+      await fetchAnime("upcoming");
+      await fetchAnime("bypopularity");
+      await fetchAnime("favorite");
+      // await getFavorites(ProfileController.userName.value);
     }
     super.onInit();
   }

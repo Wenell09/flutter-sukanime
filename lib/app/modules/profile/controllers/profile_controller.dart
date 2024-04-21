@@ -12,7 +12,7 @@ class ProfileController extends GetxController {
   static final userId = "".obs;
   static final userName = "".obs;
   static final userEmail = "".obs;
-  final userImage = "".obs;
+  static final userImage = "".obs;
   var connectionType = 0.obs;
   late StreamSubscription streamSubscription;
   final Connectivity connectivity = Connectivity();

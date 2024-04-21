@@ -1,7 +1,7 @@
+import 'package:flutter_list_anime/app/modules/allAnime/views/all_anime_view.dart';
 import 'package:get/get.dart';
 
-import '../modules/allTopAnime/bindings/all_top_anime_binding.dart';
-import '../modules/allTopAnime/views/all_top_anime_view.dart';
+import '../modules/allAnime/bindings/all_anime_binding.dart';
 import '../modules/bottomBar/bindings/bottom_bar_binding.dart';
 import '../modules/bottomBar/views/bottom_bar_view.dart';
 import '../modules/detail/views/detail_view.dart';
@@ -45,8 +45,8 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ALL_TOP_ANIME,
-      page: () => const AllTopAnimeView(),
-      binding: AllTopAnimeBinding(),
+      page: () => const AllAnime(),
+      binding: AllAnimeBinding(),
     ),
     GetPage(
       name: _Paths.DETAIL,

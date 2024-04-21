@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_list_anime/app/modules/profile/controllers/profile_controller.dart';
 import 'package:flutter_list_anime/app/modules/widgets/nointernet_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import 'package:get/get.dart';
-
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {

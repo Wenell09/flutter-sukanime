@@ -1,4 +1,3 @@
-import 'package:flutter_list_anime/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter_list_anime/app/modules/profile/controllers/profile_controller.dart';
 import 'package:get/get.dart';
 
@@ -12,9 +11,6 @@ class LoginBinding extends Bindings {
     );
     Get.lazyPut<ProfileController>(
       () => ProfileController(),
-    );
-    Get.lazyPut<HomeController>(
-      () => HomeController(),
     );
   }
 }
