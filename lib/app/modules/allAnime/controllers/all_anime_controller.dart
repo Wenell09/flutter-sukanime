@@ -24,16 +24,14 @@ class AllAnimeController extends GetxController {
         var response =
             await http.get(Uri.parse("$baseUrl/top/anime?page=$page&sfw=true"));
         if (response.statusCode == 200) {
-          final List result = jsonDecode(response.body)["data"];
           if (page == 1) {
-            allTopAnime.value =
-                result.map((e) => AnimeModel.fromJson(e)).toList();
             isFirstPage.value = true;
           } else {
-            allTopAnime.value =
-                result.map((e) => AnimeModel.fromJson(e)).toList();
             isFirstPage.value = false;
           }
+          final List result = jsonDecode(response.body)["data"];
+          allTopAnime.value =
+              result.map((e) => AnimeModel.fromJson(e)).toList();
           isLoading.value = false;
           currentPage.value = page;
         }
@@ -45,16 +43,14 @@ class AllAnimeController extends GetxController {
         var response = await http.get(
             Uri.parse("$baseUrl/top/anime?filter=$filter&page=$page&sfw=true"));
         if (response.statusCode == 200) {
-          final List result = jsonDecode(response.body)["data"];
           if (page == 1) {
-            allTopAnime.value =
-                result.map((e) => AnimeModel.fromJson(e)).toList();
             isFirstPage.value = true;
           } else {
-            allTopAnime.value =
-                result.map((e) => AnimeModel.fromJson(e)).toList();
             isFirstPage.value = false;
           }
+          final List result = jsonDecode(response.body)["data"];
+          allTopAnime.value =
+              result.map((e) => AnimeModel.fromJson(e)).toList();
           isLoading.value = false;
           currentPage.value = page;
         }
@@ -66,16 +62,14 @@ class AllAnimeController extends GetxController {
         var response = await http.get(
             Uri.parse("$baseUrl/top/anime?filter=$filter&page=$page&sfw=true"));
         if (response.statusCode == 200) {
-          final List result = jsonDecode(response.body)["data"];
           if (page == 1) {
-            allTopAnime.value =
-                result.map((e) => AnimeModel.fromJson(e)).toList();
             isFirstPage.value = true;
           } else {
-            allTopAnime.value =
-                result.map((e) => AnimeModel.fromJson(e)).toList();
             isFirstPage.value = false;
           }
+          final List result = jsonDecode(response.body)["data"];
+          allTopAnime.value =
+              result.map((e) => AnimeModel.fromJson(e)).toList();
           isLoading.value = false;
           currentPage.value = page;
         }
@@ -87,16 +81,14 @@ class AllAnimeController extends GetxController {
         var response = await http.get(
             Uri.parse("$baseUrl/top/anime?filter=$filter&page=$page&sfw=true"));
         if (response.statusCode == 200) {
-          final List result = jsonDecode(response.body)["data"];
           if (page == 1) {
-            allTopAnime.value =
-                result.map((e) => AnimeModel.fromJson(e)).toList();
             isFirstPage.value = true;
           } else {
-            allTopAnime.value =
-                result.map((e) => AnimeModel.fromJson(e)).toList();
             isFirstPage.value = false;
           }
+          final List result = jsonDecode(response.body)["data"];
+          allTopAnime.value =
+              result.map((e) => AnimeModel.fromJson(e)).toList();
           isLoading.value = false;
           currentPage.value = page;
         }
@@ -108,16 +100,14 @@ class AllAnimeController extends GetxController {
         var response = await http.get(
             Uri.parse("$baseUrl/top/anime?filter=$filter&page=$page&sfw=true"));
         if (response.statusCode == 200) {
-          final List result = jsonDecode(response.body)["data"];
           if (page == 1) {
-            allTopAnime.value =
-                result.map((e) => AnimeModel.fromJson(e)).toList();
             isFirstPage.value = true;
           } else {
-            allTopAnime.value =
-                result.map((e) => AnimeModel.fromJson(e)).toList();
             isFirstPage.value = false;
           }
+          final List result = jsonDecode(response.body)["data"];
+          allTopAnime.value =
+              result.map((e) => AnimeModel.fromJson(e)).toList();
           isLoading.value = false;
           currentPage.value = page;
         }
@@ -132,16 +122,13 @@ class AllAnimeController extends GetxController {
       var response = await http
           .get(Uri.parse("$baseUrl/top/anime?page=$page&type=movie&sfw=true"));
       if (response.statusCode == 200) {
-        final List result = jsonDecode(response.body)["data"];
         if (page == 1) {
-          allTopAnime.value =
-              result.map((e) => AnimeModel.fromJson(e)).toList();
           isFirstPage.value = true;
         } else {
-          allTopAnime.value =
-              result.map((e) => AnimeModel.fromJson(e)).toList();
           isFirstPage.value = false;
         }
+        final List result = jsonDecode(response.body)["data"];
+        allTopAnime.value = result.map((e) => AnimeModel.fromJson(e)).toList();
         isLoading.value = false;
         currentPage.value = page;
       }
@@ -218,7 +205,7 @@ class AllAnimeController extends GetxController {
     } else if (Get.arguments["movie"] == "Top Movie") {
       isLoading.value = true;
       if (currentPage.value > 1) {
-        await fetchAnimeMovie(currentPage.value + 1);
+        await fetchAnimeMovie(currentPage.value - 1);
       }
     }
   }
