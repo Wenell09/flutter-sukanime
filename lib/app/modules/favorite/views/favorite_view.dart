@@ -5,6 +5,7 @@ import 'package:flutter_list_anime/app/modules/widgets/loading_widget.dart';
 import 'package:flutter_list_anime/app/modules/widgets/nointernet_widget.dart';
 import 'package:flutter_list_anime/app/routes/app_pages.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import '../controllers/favorite_controller.dart';
 
 class FavoriteView extends StatelessWidget {
@@ -40,7 +41,7 @@ class FavoriteView extends StatelessWidget {
                       mediaQuery: MediaQuery.of(context).size.height * 0.9,
                     )
                   : StreamBuilder<QuerySnapshot>(
-                      stream: favorites.snapshots(),
+                      stream: favorites.orderBy("createdAt").snapshots(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -51,6 +52,11 @@ class FavoriteView extends StatelessWidget {
                             physics: const NeverScrollableScrollPhysics(),
                             padding: const EdgeInsets.all(8.0),
                             children: snapshot.data!.docs.map((favoriteAnime) {
+                              Timestamp? timestamp =
+                                  favoriteAnime["createdAt"] as Timestamp?;
+                              String formattedTime =
+                                  DateFormat('yyyy-MM-dd HH:mm').format(
+                                      timestamp?.toDate() ?? DateTime.now());
                               return InkWell(
                                 highlightColor: Colors.transparent,
                                 hoverColor: Colors.transparent,
@@ -107,13 +113,13 @@ class FavoriteView extends StatelessWidget {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Flexible(
-                                                    flex: 1,
+                                                    flex: 2,
                                                     child: Text(
+                                                      favoriteAnime["title"]
+                                                          .toString(),
                                                       maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,
-                                                      favoriteAnime["title"]
-                                                          .toString(),
                                                       style: const TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
@@ -132,10 +138,38 @@ class FavoriteView extends StatelessWidget {
                                                           favoriteAnime[
                                                                   "airedFrom"]
                                                               .toString()),
-                                                      style: const TextStyle(
-                                                        color: Colors.grey,
-                                                        fontSize: 12,
+                                                      style: TextStyle(
+                                                        color: (profile
+                                                                .isDark.value)
+                                                            ? Colors.grey
+                                                            : Colors.grey[700],
+                                                        fontSize: 13,
                                                       ),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Flexible(
+                                                    flex: 1,
+                                                    child: Row(
+                                                      children: [
+                                                        const Icon(
+                                                          Icons.favorite,
+                                                          color: Colors.red,
+                                                          size: 15,
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 5,
+                                                        ),
+                                                        Text(
+                                                          formattedTime,
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 12,
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
                                                 ],

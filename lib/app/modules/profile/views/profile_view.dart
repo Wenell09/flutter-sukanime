@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_list_anime/app/modules/login/controllers/login_controller.dart';
 import 'package:flutter_list_anime/app/modules/widgets/nointernet_widget.dart';
 import 'package:flutter_list_anime/app/routes/app_pages.dart';

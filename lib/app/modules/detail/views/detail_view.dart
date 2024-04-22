@@ -681,6 +681,9 @@ class DetailView extends StatelessWidget {
                                 : Colors.grey[350],
                           ),
                           child: TextField(
+                            readOnly: (ProfileController.userId.value == "")
+                                ? true
+                                : false,
                             cursorColor: Colors.white,
                             controller: controller.inputReview,
                             style: TextStyle(
