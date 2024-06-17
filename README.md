@@ -1,16 +1,19 @@
-# flutter_list_anime
+# Aplikasi Sukanime
+Sukanime adalah projek kecil yang saya buat yang terdapat fitur-fitur seperti:
+<li>login</li>
+<li>list anime dan detail anime</li>
+<li>pencarian anime</li>
+<li>menambahkan favorite anime</li>
+<li>review anime</li>
+<li>menambahkan review(khusus login)</li>
+<li>melihat trailer anime</li>
+<li>darkmode/lightmode</li>
 
-A new Flutter project.
+## Link download Aplikasi
+[>Download Sukanime<](https://drive.google.com/file/d/1KIY3Gl6sRfglMDRK4e53YNeheaEggSWu/view?usp=drive_link)
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Preview Sukanime
+### mode light
+![preview light](preview/light.png)
+### mode dark
+![preview dark](preview/dark.png)
