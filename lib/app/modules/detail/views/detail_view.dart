@@ -131,7 +131,7 @@ class DetailView extends StatelessWidget {
                                                     BorderRadius.circular(10),
                                               ),
                                               content: const Text(
-                                                "Anda harus Login!",
+                                                "You must Login!",
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     fontSize: 18,
@@ -164,7 +164,7 @@ class DetailView extends StatelessWidget {
                                                   seconds: 1,
                                                 ),
                                                 content: Text(
-                                                  "Berhasil dihapus dari daftar favorite!",
+                                                  "Success delete from favorite list!",
                                                   style: TextStyle(
                                                     fontSize: 16,
                                                   ),
@@ -199,7 +199,7 @@ class DetailView extends StatelessWidget {
                                                   seconds: 1,
                                                 ),
                                                 content: Text(
-                                                  "Berhasil menambahkan ke daftar favorite!",
+                                                  "Success add to favorite list!",
                                                   style: TextStyle(
                                                     fontSize: 16,
                                                   ),
@@ -292,8 +292,8 @@ class DetailView extends StatelessWidget {
                                                                       argument[
                                                                           "id"])
                                                               .isNotEmpty)
-                                                          ? "Berhasil ditambah"
-                                                          : "Tambahkan Favorit",
+                                                          ? "Success Add"
+                                                          : "Add Favorite",
                                                   style: const TextStyle(
                                                     fontSize: 15,
                                                     fontWeight: FontWeight.bold,
@@ -367,7 +367,6 @@ class DetailView extends StatelessWidget {
                             color: (darkMode.isDark.value)
                                 ? Colors.white
                                 : Colors.black,
-                            text: "loading data....",
                             mediaQuery:
                                 MediaQuery.of(context).size.height * 0.5,
                           )
@@ -396,13 +395,13 @@ class DetailView extends StatelessWidget {
                                             height: 10,
                                           ),
                                           const Text(
-                                            "Data tidak ditemukan !",
+                                            "Data not found !",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 15),
                                           ),
                                           const Text(
-                                            "User menekan dengan cepat, ulangi kembali!",
+                                            "User presses quickly, repeat!",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 15),
@@ -648,7 +647,7 @@ class DetailView extends StatelessWidget {
                         } else {
                           return const Center(
                             child: Text(
-                              "Belum ada review tentang Anime ini",
+                              "There are no reviews about this Anime",
                               style: TextStyle(
                                 fontSize: 18,
                               ),
@@ -692,7 +691,7 @@ class DetailView extends StatelessWidget {
                                   : Colors.black,
                             ),
                             decoration: InputDecoration(
-                              hintText: "Berikan review tentang Anime ini",
+                              hintText: "Leave a review about this Anime",
                               hintStyle: TextStyle(
                                 color: (darkMode.isDark.value)
                                     ? Colors.white
@@ -720,7 +719,7 @@ class DetailView extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     content: const Text(
-                                      "Anda harus Login!",
+                                      "You must Login!",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           fontSize: 18,
@@ -735,7 +734,7 @@ class DetailView extends StatelessWidget {
                                       seconds: 1,
                                     ),
                                     content: Text(
-                                      "Review tidak boleh kosong!",
+                                      "Review cannot be empty!",
                                       style: TextStyle(
                                         fontSize: 16,
                                       ),

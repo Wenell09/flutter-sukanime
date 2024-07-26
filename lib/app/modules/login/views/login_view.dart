@@ -86,7 +86,7 @@ class LoginView extends GetView<LoginController> {
                               Expanded(
                                 flex: 6,
                                 child: Text(
-                                  "Login dengan Google",
+                                  "Login with Google",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,

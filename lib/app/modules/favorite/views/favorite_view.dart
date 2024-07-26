@@ -37,7 +37,6 @@ class FavoriteView extends StatelessWidget {
                   ? LoadingWidget(
                       color:
                           (profile.isDark.value) ? Colors.white : Colors.black,
-                      text: "Memuat list Anime....",
                       mediaQuery: MediaQuery.of(context).size.height * 0.9,
                     )
                   : StreamBuilder<QuerySnapshot>(

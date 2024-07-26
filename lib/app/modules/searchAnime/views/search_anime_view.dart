@@ -82,7 +82,7 @@ class SearchAnimeView extends GetView<SearchAnimeController> {
                                     ),
                                   ),
                             border: InputBorder.none,
-                            hintText: "Apa yang ingin kamu cari?",
+                            hintText: "What are you looking for?",
                             hintStyle: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: (darkMode.isDark.value)
@@ -127,7 +127,7 @@ class SearchAnimeView extends GetView<SearchAnimeController> {
                                   height: 10,
                                 ),
                                 const Text(
-                                  "Cari anime kesukaanmu disini!",
+                                  "Find your favorite anime here!",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 18,

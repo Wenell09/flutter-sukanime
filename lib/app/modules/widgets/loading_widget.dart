@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
 class LoadingWidget extends StatelessWidget {
-  final String text;
+  
   final double mediaQuery;
   final Color color;
   const LoadingWidget({
     super.key,
-    required this.text,
     required this.mediaQuery,
     required this.color,
   });
@@ -31,7 +30,7 @@ class LoadingWidget extends StatelessWidget {
             height: 30,
           ),
           Text(
-            text,
+            "Please wait...",
             style: TextStyle(
               // fontFamily: "Poppins",
               fontWeight: FontWeight.w500,

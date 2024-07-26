@@ -32,7 +32,6 @@ class HomeView extends GetView<HomeController> {
                   ? LoadingWidget(
                       color:
                           (profile.isDark.value) ? Colors.white : Colors.black,
-                      text: "Mohon Tunggu....",
                       mediaQuery: MediaQuery.of(context).size.height * 0.9,
                     )
                   : Column(
@@ -623,7 +622,7 @@ class TitleText extends StatelessWidget {
               },
             ),
             child: const Text(
-              "Lihat Lainnya",
+              "See more",
               style: TextStyle(
                 fontSize: 15,
                 decoration: TextDecoration.underline,

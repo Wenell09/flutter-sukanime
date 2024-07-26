@@ -47,7 +47,6 @@ class AllAnime extends GetView<AllAnimeController> {
                   ? LoadingWidget(
                       color:
                           (darkMode.isDark.value) ? Colors.white : Colors.black,
-                      text: "Mohon Tunggu....",
                       mediaQuery: MediaQuery.of(context).size.height * 0.9,
                     )
                   : Column(

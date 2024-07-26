@@ -248,7 +248,8 @@ class ProfileView extends GetView<ProfileController> {
                           height: 10,
                         ),
                         const Text(
-                          "Versi Aplikasi : 1.0.0",
+                          textAlign: TextAlign.center,
+                          "Versi Aplikasi\n1.0.0",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
