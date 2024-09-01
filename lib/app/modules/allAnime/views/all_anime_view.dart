@@ -215,17 +215,7 @@ class AnimeAll extends StatelessWidget {
           onTap: () => Navigator.pushNamed(
             context,
             Routes.DETAIL,
-            arguments: {
-              "id": animeTopCard.malId,
-              "image": animeTopCard.imageUrl,
-              "title": animeTopCard.title,
-              "aired": animeTopCard.airedFrom,
-              "type": animeTopCard.type,
-              "rating": animeTopCard.rating,
-              "score": animeTopCard.score,
-              "member": animeTopCard.members,
-              "youtube": animeTopCard.youtubeUrl,
-            },
+            arguments: animeTopCard.malId,
           ),
           child: Card(
             elevation: 5,

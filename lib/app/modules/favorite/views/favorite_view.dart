@@ -64,17 +64,7 @@ class FavoriteView extends StatelessWidget {
                                 onTap: () => Navigator.pushNamed(
                                   context,
                                   Routes.DETAIL,
-                                  arguments: {
-                                    "id": favoriteAnime["malId"],
-                                    "image": favoriteAnime["imageUrl"],
-                                    "title": favoriteAnime["title"],
-                                    "aired": favoriteAnime["airedFrom"],
-                                    "type": favoriteAnime["type"],
-                                    "rating": favoriteAnime["rating"],
-                                    "score": favoriteAnime["score"],
-                                    "member": favoriteAnime["members"],
-                                    "youtube": favoriteAnime["youtubeUrl"],
-                                  },
+                                  arguments: favoriteAnime["malId"],
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.only(bottom: 8),

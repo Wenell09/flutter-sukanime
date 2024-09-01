@@ -43,8 +43,10 @@ class ProfileView extends GetView<ProfileController> {
                             hoverColor: Colors.transparent,
                             focusColor: Colors.transparent,
                             splashColor: Colors.transparent,
-                            onTap: () =>
-                                Navigator.of(context).pushNamed(Routes.LOGIN),
+                            onTap: () => (ProfileController.userName.value ==
+                                    "")
+                                ? Navigator.of(context).pushNamed(Routes.LOGIN)
+                                : null,
                             child: Text(
                               (ProfileController.userName.value == "")
                                   ? "Login"
@@ -154,7 +156,7 @@ class ProfileView extends GetView<ProfileController> {
                                             ),
                                             content: const Text(
                                               textAlign: TextAlign.center,
-                                              "Apakah Anda yakin untuk keluar?",
+                                              "Are you sure you want to logout?",
                                               style: TextStyle(
                                                 fontSize: 17,
                                               ),
@@ -164,7 +166,7 @@ class ProfileView extends GetView<ProfileController> {
                                                 onPressed: () =>
                                                     Navigator.of(context).pop(),
                                                 child: Text(
-                                                  "Batal",
+                                                  "No",
                                                   style: TextStyle(
                                                     color: (controller
                                                             .isDark.value)

@@ -96,17 +96,7 @@ class HomeView extends GetView<HomeController> {
                                 onTap: () => Navigator.pushNamed(
                                   context,
                                   Routes.DETAIL,
-                                  arguments: {
-                                    "id": animeTopCard.malId,
-                                    "image": animeTopCard.imageUrl,
-                                    "title": animeTopCard.title,
-                                    "aired": animeTopCard.airedFrom,
-                                    "type": animeTopCard.type,
-                                    "rating": animeTopCard.rating,
-                                    "score": animeTopCard.score,
-                                    "member": animeTopCard.members,
-                                    "youtube": animeTopCard.youtubeUrl,
-                                  },
+                                  arguments: animeTopCard.malId,
                                 ),
                                 child: Card(
                                   elevation: 5,
@@ -177,17 +167,7 @@ class HomeView extends GetView<HomeController> {
                                 onTap: () => Navigator.pushNamed(
                                   context,
                                   Routes.DETAIL,
-                                  arguments: {
-                                    "id": animeRecomCard.malId,
-                                    "image": animeRecomCard.imageUrl,
-                                    "title": animeRecomCard.title,
-                                    "aired": animeRecomCard.airedFrom,
-                                    "type": animeRecomCard.type,
-                                    "rating": animeRecomCard.rating,
-                                    "score": animeRecomCard.score,
-                                    "member": animeRecomCard.members,
-                                    "youtube": animeRecomCard.youtubeUrl,
-                                  },
+                                  arguments: animeRecomCard.malId,
                                 ),
                                 child: Card(
                                   elevation: 5,
@@ -274,17 +254,7 @@ class HomeView extends GetView<HomeController> {
                                 onTap: () => Navigator.pushNamed(
                                   context,
                                   Routes.DETAIL,
-                                  arguments: {
-                                    "id": animeUpcomingCard.malId,
-                                    "image": animeUpcomingCard.imageUrl,
-                                    "title": animeUpcomingCard.title,
-                                    "aired": animeUpcomingCard.airedFrom,
-                                    "type": animeUpcomingCard.type,
-                                    "rating": animeUpcomingCard.rating,
-                                    "score": animeUpcomingCard.score,
-                                    "member": animeUpcomingCard.members,
-                                    "youtube": animeUpcomingCard.youtubeUrl,
-                                  },
+                                  arguments: animeUpcomingCard.malId,
                                 ),
                                 child: Card(
                                   elevation: 5,
@@ -356,17 +326,7 @@ class HomeView extends GetView<HomeController> {
                                 onTap: () => Navigator.pushNamed(
                                   context,
                                   Routes.DETAIL,
-                                  arguments: {
-                                    "id": animeMovieCard.malId,
-                                    "image": animeMovieCard.imageUrl,
-                                    "title": animeMovieCard.title,
-                                    "aired": animeMovieCard.airedFrom,
-                                    "type": animeMovieCard.type,
-                                    "rating": animeMovieCard.rating,
-                                    "score": animeMovieCard.score,
-                                    "member": animeMovieCard.members,
-                                    "youtube": animeMovieCard.youtubeUrl,
-                                  },
+                                  arguments: animeMovieCard.malId,
                                 ),
                                 child: Card(
                                   elevation: 5,
@@ -438,17 +398,7 @@ class HomeView extends GetView<HomeController> {
                                 onTap: () => Navigator.pushNamed(
                                   context,
                                   Routes.DETAIL,
-                                  arguments: {
-                                    "id": animePopularCard.malId,
-                                    "image": animePopularCard.imageUrl,
-                                    "title": animePopularCard.title,
-                                    "aired": animePopularCard.airedFrom,
-                                    "type": animePopularCard.type,
-                                    "rating": animePopularCard.rating,
-                                    "score": animePopularCard.score,
-                                    "member": animePopularCard.members,
-                                    "youtube": animePopularCard.youtubeUrl,
-                                  },
+                                  arguments: animePopularCard.malId,
                                 ),
                                 child: Card(
                                   elevation: 5,
@@ -520,17 +470,7 @@ class HomeView extends GetView<HomeController> {
                                 onTap: () => Navigator.pushNamed(
                                   context,
                                   Routes.DETAIL,
-                                  arguments: {
-                                    "id": animeFavoriteCard.malId,
-                                    "image": animeFavoriteCard.imageUrl,
-                                    "title": animeFavoriteCard.title,
-                                    "aired": animeFavoriteCard.airedFrom,
-                                    "type": animeFavoriteCard.type,
-                                    "rating": animeFavoriteCard.rating,
-                                    "score": animeFavoriteCard.score,
-                                    "member": animeFavoriteCard.members,
-                                    "youtube": animeFavoriteCard.youtubeUrl,
-                                  },
+                                  arguments: animeFavoriteCard.malId,
                                 ),
                                 child: Card(
                                   elevation: 5,

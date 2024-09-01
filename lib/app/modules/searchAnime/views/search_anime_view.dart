@@ -157,17 +157,7 @@ class SearchAnimeView extends GetView<SearchAnimeController> {
                                   onTap: () => Navigator.pushNamed(
                                     context,
                                     Routes.DETAIL,
-                                    arguments: {
-                                      "id": animeSearchCard.malId,
-                                      "image": animeSearchCard.imageUrl,
-                                      "title": animeSearchCard.title,
-                                      "aired": animeSearchCard.airedFrom,
-                                      "type": animeSearchCard.type,
-                                      "rating": animeSearchCard.rating,
-                                      "score": animeSearchCard.score,
-                                      "member": animeSearchCard.members,
-                                      "youtube": animeSearchCard.youtubeUrl,
-                                    },
+                                    arguments: animeSearchCard.malId,
                                   ),
                                   child: Card(
                                     elevation: 5,

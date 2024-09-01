@@ -1,37 +1,70 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_list_anime/app/data/base/base_url.dart';
 import 'package:flutter_list_anime/app/data/models/anime_model.dart';
+import 'package:flutter_list_anime/app/data/models/character_model.dart';
+import 'package:flutter_list_anime/app/data/models/recommendation_model.dart';
 import 'package:get/get.dart';
 import "package:http/http.dart" as http;
 import 'package:intl/intl.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class DetailController extends GetxController {
   var isLoading = true.obs;
   var isLoadingFavorite = false.obs;
+  var malId = Get.arguments;
   var detailAnime = <AnimeModel>[].obs;
+  var charaAnime = <CharacterModel>[].obs;
+  var recomenAnime = <RecommendationModel>[].obs;
   var inputReview = TextEditingController();
-  late YoutubePlayerController youtubeController;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future<void> fetchDetailAnime(int id) async {
+  Future<List<AnimeModel>> fetchDetailAnime(int id) async {
     try {
       var response = await http.get(Uri.parse("$baseUrl/anime/$id"));
       if (response.statusCode == 200) {
-        if (Get.arguments["id"] != id) {
-          isLoading.value = true;
-        } else {
-          final Map<String, dynamic> result = jsonDecode(response.body)["data"];
-          detailAnime.value = [AnimeModel.fromJson(result)];
-          isLoading.value = !isLoading.value;
-        }
+        final Map<String, dynamic> result = jsonDecode(response.body)["data"];
+        detailAnime.value = [AnimeModel.fromJson(result)];
+        isLoading.value = false;
       }
     } catch (e) {
       debugPrint("Gagal fetch : $e");
     }
+    return detailAnime;
+  }
+
+  Future<List<CharacterModel>> fetchCharacter(int id) async {
+    try {
+      final response =
+          await http.get(Uri.parse("$baseUrl/anime/$id/characters"));
+      if (response.statusCode == 200) {
+        final List result = jsonDecode(response.body)["data"];
+        charaAnime.value =
+            result.map((json) => CharacterModel.fromJson(json)).toList();
+      } else {
+        debugPrint("gagal get character");
+      }
+    } catch (e) {
+      debugPrint("error:$e");
+    }
+    return charaAnime;
+  }
+
+  Future<List<RecommendationModel>> fetchRecomenAnime(int id) async {
+    try {
+      final response =
+          await http.get(Uri.parse("$baseUrl/anime/$id/recommendations"));
+      if (response.statusCode == 200) {
+        final List result = jsonDecode(response.body)["data"];
+        recomenAnime.value =
+            result.map((json) => RecommendationModel.fromJson(json)).toList();
+      } else {
+        debugPrint("gagal get recomen");
+      }
+    } catch (e) {
+      debugPrint("error:$e");
+    }
+    return recomenAnime;
   }
 
   Future<void> addReview(
@@ -82,20 +115,9 @@ class DetailController extends GetxController {
 
   @override
   void onInit() {
-    fetchDetailAnime(Get.arguments["id"]);
-    final videoId = YoutubePlayer.convertUrlToId(Get.arguments["youtube"]);
-    youtubeController = YoutubePlayerController(
-      initialVideoId: videoId.toString(),
-      flags: const YoutubePlayerFlags(
-        autoPlay: false,
-      ),
-    );
+    fetchDetailAnime(malId);
+    fetchCharacter(malId);
+    fetchRecomenAnime(malId);
     super.onInit();
-  }
-
-  @override
-  void dispose() {
-    youtubeController.dispose();
-    super.dispose();
   }
 }
