@@ -3,8 +3,8 @@ import 'package:flutter_list_anime/app/modules/profile/controllers/profile_contr
 import 'package:flutter_list_anime/app/routes/app_pages.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import '../controllers/home_controller.dart';
-import '../../widgets/loading_widget.dart';
 import '../../widgets/nointernet_widget.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -29,11 +29,7 @@ class HomeView extends GetView<HomeController> {
           () => (controller.connectionType.value == 0)
               ? const NoInternet()
               : (controller.isLoading.value)
-                  ? LoadingWidget(
-                      color:
-                          (profile.isDark.value) ? Colors.white : Colors.black,
-                      mediaQuery: MediaQuery.of(context).size.height * 0.9,
-                    )
+                  ? const ShimmerLoading()
                   : Column(
                       children: [
                         const SizedBox(
@@ -520,6 +516,162 @@ class HomeView extends GetView<HomeController> {
                     ),
         ),
       ),
+    );
+  }
+}
+
+class ShimmerLoading extends StatelessWidget {
+  const ShimmerLoading({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(
+          height: 10,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Shimmer.fromColors(
+            baseColor: Colors.grey.shade300,
+            highlightColor: Colors.grey.shade100,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 220,
+              margin: const EdgeInsets.symmetric(horizontal: 5.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Shimmer.fromColors(
+                baseColor: Colors.grey.shade300,
+                highlightColor: Colors.grey.shade100,
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.45,
+                  height: MediaQuery.of(context).size.height * 0.03,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Shimmer.fromColors(
+                baseColor: Colors.grey.shade300,
+                highlightColor: Colors.grey.shade100,
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  height: MediaQuery.of(context).size.height * 0.03,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: 280,
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.all(8.0),
+            itemBuilder: (context, index) {
+              return Shimmer.fromColors(
+                baseColor: Colors.grey.shade300,
+                highlightColor: Colors.grey.shade100,
+                child: Card(
+                  elevation: 5,
+                  shadowColor: Colors.black,
+                  child: Container(
+                    width: 160,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                ),
+              );
+            },
+            itemCount: 3,
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Shimmer.fromColors(
+                baseColor: Colors.grey.shade300,
+                highlightColor: Colors.grey.shade100,
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.45,
+                  height: MediaQuery.of(context).size.height * 0.03,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Shimmer.fromColors(
+                baseColor: Colors.grey.shade300,
+                highlightColor: Colors.grey.shade100,
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  height: MediaQuery.of(context).size.height * 0.03,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: 280,
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.all(8.0),
+            itemBuilder: (context, index) {
+              return Shimmer.fromColors(
+                baseColor: Colors.grey.shade300,
+                highlightColor: Colors.grey.shade100,
+                child: Card(
+                  elevation: 5,
+                  shadowColor: Colors.black,
+                  child: Container(
+                    width: 160,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                ),
+              );
+            },
+            itemCount: 3,
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+      ],
     );
   }
 }
