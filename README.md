@@ -12,7 +12,7 @@ Sukanime adalah projek kecil yang saya buat yang terdapat fitur-fitur seperti:
 <li>darkmode/lightmode</li>
 
 ## Link download Aplikasi
-[>Download Sukanime<](https://drive.google.com/file/d/1KIY3Gl6sRfglMDRK4e53YNeheaEggSWu/view?usp=drive_link)
+[>Download Sukanime<](https://drive.google.com/file/d/16hv_401epbzlEnShwK26EYpwmwJf44Ga/view?usp=drive_link)
 
 ## Preview Sukanime
 ### mode light
