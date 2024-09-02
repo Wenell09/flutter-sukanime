@@ -593,8 +593,6 @@ class ShimmerLoading extends StatelessWidget {
                 baseColor: Colors.grey.shade300,
                 highlightColor: Colors.grey.shade100,
                 child: Card(
-                  elevation: 5,
-                  shadowColor: Colors.black,
                   child: Container(
                     width: 160,
                     decoration: BoxDecoration(
@@ -653,8 +651,6 @@ class ShimmerLoading extends StatelessWidget {
                 baseColor: Colors.grey.shade300,
                 highlightColor: Colors.grey.shade100,
                 child: Card(
-                  elevation: 5,
-                  shadowColor: Colors.black,
                   child: Container(
                     width: 160,
                     decoration: BoxDecoration(

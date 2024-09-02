@@ -15,8 +15,6 @@ class FavoriteView extends StatelessWidget {
     final profile = Get.put(ProfileController());
     final controller = Get.put(FavoriteController());
     FirebaseFirestore firestore = FirebaseFirestore.instance;
-    CollectionReference favorites =
-        firestore.collection("favorites_${ProfileController.userName.value}");
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -40,7 +38,11 @@ class FavoriteView extends StatelessWidget {
                       mediaQuery: MediaQuery.of(context).size.height * 0.9,
                     )
                   : StreamBuilder<QuerySnapshot>(
-                      stream: favorites.orderBy("createdAt").snapshots(),
+                      stream: firestore
+                          .collection(
+                              "favorites_${ProfileController.userName.value}")
+                          .orderBy("createdAt")
+                          .snapshots(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -123,10 +125,14 @@ class FavoriteView extends StatelessWidget {
                                                     flex: 1,
                                                     child: Text(
                                                       maxLines: 1,
-                                                      controller.formatMonth(
-                                                          favoriteAnime[
-                                                                  "airedFrom"]
-                                                              .toString()),
+                                                      (favoriteAnime[
+                                                                  "airedFrom"] ==
+                                                              "")
+                                                          ? ""
+                                                          : controller.formatMonth(
+                                                              favoriteAnime[
+                                                                      "airedFrom"]
+                                                                  .toString()),
                                                       style: TextStyle(
                                                         color: (profile
                                                                 .isDark.value)
